@@ -9,40 +9,33 @@
 <form action="{% url 'signup' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <!-- <label for="user">Select type of User:</label>
-    <select name="user" id="user" required>
-        <option value="is_owner">I am a pet owner</option>
-        <option value="is_sitter">I am a pet sitter</option>
-    </select> -->
 
     <div class="input-field col s12">
         <select id="user-select">
-          <option value="" disabled selected>Choose your option</option>
-          <option value="is_owner">I am a pet owner</option>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="is_owner">I am a pet owner</option>
             <option value="is_sitter">I am a pet sitter</option>
         </select>
         <label>User Type</label>
     </div>
-
-
-
-
+    
     <input type="submit" class="btn" value="signup">
 </form>
 
-{% endblock %}
 
-<script id="user-select">
+
+<script>
     // create a datepicker
-    var dateEl = document.getElementById('id_date');
-    M.Datepicker.init(dateEl, {
-      format: 'yyyy-mm-dd',
-      defaultDate: new Date(),
-      setDefaultDate: true,
-      autoClose: true
-    });
-    // initialize the meal select
-    var selectEl = document.getElementById('id_meal');
-    M.FormSelect.init(selectEl);
-</script>
+    // var dateEl = document.getElementById('id_date');
+    // M.Datepicker.init(dateEl, {
+        //   format: 'yyyy-mm-dd',
+        //   defaultDate: new Date(),
+        //   setDefaultDate: true,
+        //   autoClose: true
+        // });
+        // initialize the meal select
+        const selectEl = document.querySelectorAll('select');
+        M.FormSelect.init(selectEl);
+    </script>
   
+  {% endblock %}
