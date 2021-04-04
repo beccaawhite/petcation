@@ -15,7 +15,7 @@ class Owner(models.Model):
     pets = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
     def get_absolute_url(self):
         return reverse('o_index', kwargs={'owner_id': self.id})
@@ -27,12 +27,12 @@ class Sitter(models.Model):
     last_name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     about = models.TextField(max_length=600)
-    sit_count = models.IntegerField()
+    sit_count = models.IntegerField(null=True)
     pet_experience = models.CharField(max_length=100)
     rating = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
     def get_absolute_url(self):
         return reverse('s_index', kwargs={'sitter_id': self.id})

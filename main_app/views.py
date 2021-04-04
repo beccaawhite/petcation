@@ -43,7 +43,7 @@ class OwnerCreate(CreateView):
 
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
-  return render(request, 'owners/o_index.html', { 'owners': owners })
+  return render(request, 'owners/index.html', { 'owners': owners })
 
 class SitterCreate(CreateView):
   model = Sitter
@@ -55,4 +55,4 @@ class SitterCreate(CreateView):
 
 def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)
-  return render(request, 'sitters/s_index.html', { 'sitters': sitters })
+  return render(request, 'sitters/index.html', { 'sitters': sitters })
