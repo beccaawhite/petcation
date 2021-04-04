@@ -23,8 +23,19 @@
           <li><a href="/about">About</a></li>
           {% if user.is_authenticated %}
             <li><a href="/posts">View All Petcations</a></li>
-            <li><a href="{% url 'owners_create' %}">Create Pet Owner Profile</a></li>
-            <li><a href="{% url 'sitters_create' %}">Create Pet Sitter Profile</a></li>
+
+            {% if user.owner.id %}
+                <li><a href="{% url 'owners_create' %}">My Pet Profile</a></li>
+            {% else %}
+                <li><a href="{% url 'owners_create' %}">Create Pet Owner Profile</a></li>
+            {% endif %}
+
+            {% if user.sitter.id %}
+                <li><a href="{% url 'sitters_create' %}">My Sitter Profile</a></li>
+            {% else %}
+                <li><a href="{% url 'sitters_create' %}">Create Pet Sitter Profile</a></li>
+            {% endif %}
+
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
             <li><a href="{% url 'login' %}">Log In</a></li>
