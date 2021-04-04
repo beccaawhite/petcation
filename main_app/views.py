@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post
 
-# Create your views here.
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -33,6 +32,8 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+
+# Owner Views
 class OwnerCreate(CreateView):
   model = Owner
   fields = ['first_name', 'last_name', 'city', 'about']
@@ -40,6 +41,14 @@ class OwnerCreate(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+class OwnerUpdate(UpdateView):
+  model = Owner
+  fields = ['first_name', 'last_name', 'city', 'about']
+
+class OwnerDelete(DeleteView):
+  model = Owner
+  success_url = '/'
 
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
@@ -51,6 +60,8 @@ def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
 
+
+# Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
@@ -58,6 +69,14 @@ class SitterCreate(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+class SitterUpdate(UpdateView):
+  model = Sitter
+  fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
+
+class SitterDelete(DeleteView):
+  model = Sitter
+  success_url = '/'
 
 def sitters_detail(request, sitter_id):
   sitter = Sitter.objects.get(id=sitter_id)

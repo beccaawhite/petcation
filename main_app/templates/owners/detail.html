@@ -19,6 +19,10 @@
       <p>About: {{ owner.about }}</p>
     </div>
   </div>
+  <div class="card-action">
+    <a href="{% url 'owners_update' owner.id %}">Edit</a>
+    <a href="{% url 'owners_delete' owner.id %}">Delete</a>
+  </div>
 </main>
 
 
