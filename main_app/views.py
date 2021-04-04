@@ -52,13 +52,26 @@ class OwnerDelete(DeleteView):
 
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
+
+  # instatiate PetForm to be rendered in template
+  # pet_form = PetForm()
   return render(request, 'owners/detail.html', {
     'owner': owner
+    # 'pet_form': pet_form
   })
+
 
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
+
+class PetCreate(CreateView):
+  model = Pet
+  fields = ['name', 'pet_type', 'breed', 'age', 'gender', 'characteristics', 'care_instructions']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
 
 
 # Sitter Views
