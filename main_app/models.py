@@ -18,7 +18,7 @@ class Owner(models.Model):
         return self.first_name
 
     def get_absolute_url(self):
-        return reverse('o_index', kwargs={'owner_id': self.id})
+        return reverse('detail', kwargs={'owner_id': self.id})
 
 
 class Sitter(models.Model):  
@@ -35,7 +35,7 @@ class Sitter(models.Model):
         return self.first_name
 
     def get_absolute_url(self):
-        return reverse('s_index', kwargs={'sitter_id': self.id})
+        return reverse('detail', kwargs={'sitter_id': self.id})
 
 class Pet(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)

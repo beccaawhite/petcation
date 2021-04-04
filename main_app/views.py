@@ -41,6 +41,12 @@ class OwnerCreate(CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
+def owners_detail(request, owner_id):
+  owner = Owner.objects.get(id=owner_id)
+  return render(request, 'owners/detail.html', {
+    'owner': owner
+  })
+
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
@@ -52,6 +58,12 @@ class SitterCreate(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+def sitters_detail(request, sitter_id):
+  sitter = Sitter.objects.get(id=sitter_id)
+  return render(request, 'sitters/detail.html', {
+    'sitter': sitter
+  })
 
 def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)

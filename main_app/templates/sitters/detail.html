@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Welcome {{ sitter.first_name }} </h1>
+
+<div class="row">
+  <div class="card small">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">PROFILE PHOTO</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-content">
+    <p>Name: {{ sitter.first_name }}</p>
+    <p>Location: {{ sitter.city }}</p>
+    <p>Sit Count: {{ sitter.sit_count }}</p>
+    <p>Pet Experience: {{ sitter.pet_experience }}</p>
+    <p>About: {{ sitter.about }}</p>
+  </div>
+</div>
+
+
+{% endblock %}
