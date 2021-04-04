@@ -1,33 +1,41 @@
 from django.db import models
+from django.urls import reverse
 
 from django.contrib.auth.models import User
 # Create your models here.
 
-class MyUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_owner = models.BooleanField('owner status', default=False)
-    is_sitter = models.BooleanField('sitter status', default=False)
+
 
 class Owner(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    about = models.TextField(max_length=600)
     pets = models.CharField(max_length=100)
-    profile_picture = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('o_index', kwargs={'owner_id': self.id})
+
+
 class Sitter(models.Model):  
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    about = models.TextField(max_length=600)
     sit_count = models.IntegerField()
     pet_experience = models.CharField(max_length=100)
     rating = models.CharField(max_length=100)
-    profile_picture = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-    
+    def get_absolute_url(self):
+        return reverse('s_index', kwargs={'sitter_id': self.id})
 
 class Pet(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
