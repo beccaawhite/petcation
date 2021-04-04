@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post
-from .forms import PetForm
 
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -55,10 +54,10 @@ def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
 
   # instatiate PetForm to be rendered in template
-  pet_form = PetForm()
+  # pet_form = PetForm()
   return render(request, 'owners/detail.html', {
-    'owner': owner,
-    'pet_form': pet_form
+    'owner': owner
+    # 'pet_form': pet_form
   })
 
 
@@ -66,16 +65,13 @@ def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
 
-def add_pet(request, owner_id):
-  # create the PetForm using data in request.POST
-  form = PetForm(request.POST)
-  # validate form
-  if form.is_valid():
-    # don't save the form to the db until is has the owner_id assigned
-    new_pet = form.save(commit=False)
-    new_pet.owner_id = owner_id
-    new_pet.save()
-  return redirect('detail', owner_id=owner_id)
+class PetCreate(CreateView):
+  model = Pet
+  fields = ['name', 'pet_type', 'breed', 'age', 'gender', 'characteristics', 'care_instructions']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
 
 
 # Sitter Views
