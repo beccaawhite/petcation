@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h1> Pet Owner List</h1>
-
-{% for owner in owners %}
-    <div class="card">
-        <div class="card-content">
-            <p>{{ owner.first_name }} is a pet owner</p>
+<main class="container">
+    <h1> Pet Owner List</h1>
+    
+    {% for owner in owners %}
+        <div class="card">
+            <div class="card-content">
+                <p>{{ owner.first_name }} is a pet owner</p>
+            </div>
         </div>
-    </div>
-  </a>
+      </a>
+</main>
 {% endfor %}
 
 {% endblock %}
