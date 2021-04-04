@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<main class="container">
 
-  <h1>Create a Pet Owner Profile</h1>
+<main class="container">
+  {% if object %}
+    <h1>Edit <span class="teal-text">{{object.first_name}}</span></h1>
+  {% else %}
+    <h1>Create a Pet Owner Profile</h1>
+  {% endif %}
   <!-- Leaving the action empty makes the form post to the same url used to display it -->
   <form action="" method="post">
     <!-- Django requires the following for security purposes -->
@@ -14,4 +18,5 @@
     <input type="submit" value="Submit!" class="btn">
   </form>
 </main>
+
 {% endblock %}

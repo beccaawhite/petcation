@@ -24,6 +24,10 @@
       <p>About: {{ sitter.about }}</p>
     </div>
   </div>
+  <div class="card-action">
+    <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
+    <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
+  </div>
 </main>
 
 
