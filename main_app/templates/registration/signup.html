@@ -3,19 +3,11 @@
 {% block content %}
 
 <h1>Sign Up</h1>
-
 {% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
-
-<form action="{% url 'signup' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <div class="input-field col s12">
-        <li><a href="{% url 'owners_signup' %}">I'm a pet owner</a></li>
-        <li><a href="{% url 'sitters_signup' %}">I'm a pet sitter</a></li>
-    </div>
-    
-    <input type="submit" class="btn" value="signup">
-</form>
-  
+    <form action="{% url 'signup' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn" value="signup">
+    </form>
+   
 {% endblock %}

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from .models import Owner, Sitter, Pet, Post
 
 # Create your views here.
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from .models import Owner, Sitter, Pet, Post, MyUser
 
 # Define the home view
 def home(request):
@@ -14,9 +15,6 @@ def about(request):
 
 
 def signup(request):
-  return render(request, 'registration/signup.html')
-
-def owners_signup(request):
   error_message = ''
   if request.method == 'POST':
     # This is how to create a 'user' form object
@@ -33,24 +31,28 @@ def owners_signup(request):
   # A bad POST or a GET request, so render signup.html with an empty form
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/owners_signup.html', context)
+  return render(request, 'registration/signup.html', context)
 
+class OwnerCreate(CreateView):
+  model = Owner
+  fields = ['first_name', 'last_name', 'city', 'about']
 
-def sitters_signup(request):
-  error_message = ''
-  if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-      # This will add the user to the database
-      user = form.save()
-      # This is how we log a user in via code
-      login(request, user)
-      return redirect('home')
-    else:
-      error_message = 'Invalid sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
-  form = UserCreationForm()
-  context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/sitters_signup.html', context)
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
+def owners_index(request):
+  owners = Owner.objects.filter(user=request.user)
+  return render(request, 'owners/o_index.html', { 'owners': owners })
+
+class SitterCreate(CreateView):
+  model = Sitter
+  fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
+def sitters_index(request):
+  sitters = Sitter.objects.filter(user=request.user)
+  return render(request, 'sitters/s_index.html', { 'sitters': sitters })
