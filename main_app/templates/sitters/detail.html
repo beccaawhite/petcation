@@ -2,7 +2,7 @@
 {% block content %}
 
 <main class="container">
-<h1>Welcome {{ sitter.first_name }} </h1>
+  <h1>Welcome {{ sitter.first_name }} </h1>
 
 <div class="row">
   <div class="card small">
@@ -51,14 +51,13 @@
                 &q=Space+Needle,{{sitter.city}}">
             </iframe> 
       </div>
-
       <div class="card-action">
         <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
         <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
       </div>
-
     </div>
-
+   
+    </div> -->
   </div>
 </main>
 

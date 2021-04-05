@@ -101,13 +101,10 @@ class SitterCreate(CreateView):
   model = Sitter
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
-  # def form_valid(self, form):
-  #   form.instance.owner = self.request.owner
-  #   return super().form_valid(form)
   def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
+    form.instance.user = self.request.user
+    return super().form_valid(form)
 
 class SitterUpdate(UpdateView):
   model = Sitter
@@ -116,6 +113,8 @@ class SitterUpdate(UpdateView):
 class SitterDelete(DeleteView):
   model = Sitter
   success_url = '/'
+
+
 
 def sitters_detail(request, sitter_id):
   sitter = Sitter.objects.get(id=sitter_id)
