@@ -28,6 +28,7 @@
   <h3>Pet List</h3>
   
   {% for pet in owner.pet_set.all %}
+  <a href="{% url 'pets_detail' pet.id %}">
     <div class="card">
         <div class="card-content">
             <span class="card-title">{{ pet.name }}</span>
@@ -37,6 +38,7 @@
             <p>Gender: {{ pet.gender }}</p>
         </div>
     </div>
+  </a>
   {% endfor %}
   </div>
   <h1>Add Pet</h1>
