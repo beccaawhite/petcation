@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Owner, Sitter, Pet, Post,Photo
+from .models import Owner, Sitter, Pet, Post, Photo
 from .forms import PetForm
 
 from django.contrib.auth import login
@@ -50,6 +50,7 @@ class OwnerCreate(CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
+
 class OwnerUpdate(UpdateView):
   model = Owner
   fields = ['first_name', 'last_name', 'city', 'about']
@@ -60,7 +61,6 @@ class OwnerDelete(DeleteView):
 
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
-
   return render(request, 'owners/detail.html', {
     'owner': owner,
   })
@@ -87,7 +87,6 @@ def add_pet(request, owner_id):
     new_pet.owner_id = owner_id
     new_pet.save()
   return redirect('detail', owner_id=owner_id)
-
 
 # Pet Views
 def pets_detail(request, pet_id):
@@ -120,8 +119,8 @@ class SitterCreate(CreateView):
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
-
     form.instance.user = self.request.user
+    print(request.user)
     return super().form_valid(form)
 
 class SitterUpdate(UpdateView):
@@ -131,7 +130,6 @@ class SitterUpdate(UpdateView):
 class SitterDelete(DeleteView):
   model = Sitter
   success_url = '/'
-
 
 
 def sitters_detail(request, sitter_id):
