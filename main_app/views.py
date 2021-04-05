@@ -61,13 +61,17 @@ class OwnerDelete(DeleteView):
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
 
-  # instatiate PetForm to be rendered in template
-  pet_form = PetForm()
   return render(request, 'owners/detail.html', {
+    'owner': owner,
+  })
+
+def pets_create(request, owner_id):
+  owner = Owner.objects.get(id=owner_id)
+  pet_form = PetForm()
+  return render(request, 'owners/pet_form.html', {
     'owner': owner,
     'pet_form': pet_form
   })
-
 
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
