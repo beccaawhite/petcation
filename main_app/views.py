@@ -77,7 +77,12 @@ def add_pet(request, owner_id):
     new_pet.save()
   return redirect('detail', owner_id=owner_id)
 
-
+# Pet Views
+def pets_detail(request, pet_id):
+  pet = Pet.objects.get(id=pet_id)
+  return render(request, 'owners/pets/detail.html', {
+    'pet': pet
+  })
 
 # Sitter Views
 class SitterCreate(CreateView):
