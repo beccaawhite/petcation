@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main class="container">
+<h3>Edit Pet</h3>
+<!-- Leaving the action empty makes the form post to the same url used to display it -->
+<div class="col s6">
+  <form action="{% url 'pets_update' pet.id %}" method="post">
+    {% csrf_token %}
+    {{ pet_form.as_p }}
+    <input type="submit" class="btn" value="Edit Pet">
+  </form>
+</div>
+</main>
+
+{% endblock %}
