@@ -96,6 +96,24 @@ def pets_detail(request, pet_id):
     'pet': pet
   })
 
+
+def pet_update(request, pet_id):
+  form = PetForm(request.POST)
+  if form.is_valid():
+    # edit_pet = form.save(commit=False)
+    form.save()
+  return redirect('pets_detail', pet_id=pet_id)
+
+def pets_update_form(request, pet_id):
+  print(request, ' this is the request')
+  pet = Pet.objects.get(id=pet_id)
+  pet_form = PetForm(instance=pet)
+  return render(request, 'owners/pets/pet_form_edit.html', {
+    'pet': pet,
+    'pet_form': pet_form
+  })
+
+
 # Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
