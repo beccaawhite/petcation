@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect
+
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Owner, Sitter, Pet, Post
+from .models import Owner, Sitter, Pet, Post,Photo
 from .forms import PetForm
 
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+
+import uuid
+import boto3
+S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'beccaabucket'
 
 # Define the home view
 def home(request):
@@ -110,3 +117,23 @@ def sitters_detail(request, sitter_id):
 def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)
   return render(request, 'sitters/index.html', { 'sitters': sitters })
+
+
+def add_photo(request, sitter_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            print(url)
+            # we can assign to cat_id or cat (if you have a cat object)
+            Photo.objects.create(url=url, sitter_pic_id=sitter_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('detail', sitter_id=sitter_id)
