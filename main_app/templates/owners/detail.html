@@ -39,10 +39,16 @@
     </div>
   {% endfor %}
   </div>
+  <h1>Add Pet</h1>
+  <!-- Leaving the action empty makes the form post to the same url used to display it -->
   <div class="col s6">
-    <a href="{% url 'pets_create' owner.id %}">Add Pet</a>
+    <form action="{% url 'add_pet' owner.id %}" method="post">
+      {% csrf_token %}
+      {{ pet_form.as_p }}
+      <input type="submit" class="btn" value="Add Pet">
+    </form>
   </div>
-
+</main>
 
 </main>
 {% endblock %}
