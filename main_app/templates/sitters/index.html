@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+<main class="container">
 
-<h1> Pet Sitter List</h1>
 
-{% for sitter in sitters %}
-    <div class="card">
-        <div class="card-content">
-            <p>{{ sitter.first_name }} is a pet sitter</p>
-            <a href="/sitters/{{sitter.id}}">My profile</a>
+    <h1> Pet Sitter List</h1>
+    
+    {% for sitter in sitters %}
+        <div class="card">
+            <div class="card-content">
+                <p>{{ sitter.first_name }} is a pet sitter</p>
+              <a href="/sitters/{{sitter.id}}">My profile</a>
+            </div>
+
         </div>
-    </div>
-  </a>
-{% endfor %}
+    {% endfor %}
+     
+</main>
 
 {% endblock %}

@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
-from .models import Owner, Sitter, Pet, Post, Photo
 
-# Create your views here.
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Owner, Sitter, Pet, Post,Photo
+from .forms import PetForm
+
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -38,6 +40,8 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+
+# Owner Views
 class OwnerCreate(CreateView):
   model = Owner
   fields = ['first_name', 'last_name', 'city', 'about']
@@ -46,23 +50,63 @@ class OwnerCreate(CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
+class OwnerUpdate(UpdateView):
+  model = Owner
+  fields = ['first_name', 'last_name', 'city', 'about']
+
+class OwnerDelete(DeleteView):
+  model = Owner
+  success_url = '/'
+
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
+
+  # instatiate PetForm to be rendered in template
+  pet_form = PetForm()
   return render(request, 'owners/detail.html', {
-    'owner': owner
+    'owner': owner,
+    'pet_form': pet_form
   })
+
 
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
 
+def add_pet(request, owner_id):
+  # create the PetForm using data in request.POST
+  form = PetForm(request.POST)
+  # validate form
+  if form.is_valid():
+    # don't save the form to the db until is has the owner_id assigned
+    new_pet = form.save(commit=False)
+    new_pet.owner_id = owner_id
+    new_pet.save()
+  return redirect('detail', owner_id=owner_id)
+
+# Pet Views
+def pets_detail(request, pet_id):
+  pet = Pet.objects.get(id=pet_id)
+  return render(request, 'owners/pets/detail.html', {
+    'pet': pet
+  })
+
+# Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
-    form.instance.user = self.request.user
+    form.instance.owner = self.request.owner
     return super().form_valid(form)
+
+class SitterUpdate(UpdateView):
+  model = Sitter
+  fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
+
+class SitterDelete(DeleteView):
+  model = Sitter
+  success_url = '/'
 
 def sitters_detail(request, sitter_id):
   sitter = Sitter.objects.get(id=sitter_id)
