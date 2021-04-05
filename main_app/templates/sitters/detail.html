@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+
 </div>
 
 <br>
@@ -37,6 +38,7 @@
 
 <div class="row">
     <div class="col s6 card">
+
       <div class="card-content">
         <p>Name: {{ sitter.first_name }}</p>
         <p>Location: {{ sitter.city }}</p>
@@ -44,10 +46,23 @@
         <p>Pet Experience: {{ sitter.pet_experience }}</p>
         <p>About: {{ sitter.about }}</p>
       </div>
+      <div>
+    <iframe
+          width="600"
+          height="450"
+          style="border:0"
+          loading="lazy"
+          allowfullscreen
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAni-2dMS-1jCp_p8xumM82vShRZbY_CgU
+            &q=Space+Needle,{{sitter.city}}">
+        </iframe> 
+  </div>
+
       <div class="card-action">
         <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
         <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
       </div>
+
     </div>
 
   </div>
