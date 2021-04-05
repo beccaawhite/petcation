@@ -84,6 +84,7 @@ def add_pet(request, owner_id):
     new_pet.save()
   return redirect('detail', owner_id=owner_id)
 
+
 # Pet Views
 def pets_detail(request, pet_id):
   pet = Pet.objects.get(id=pet_id)
@@ -96,9 +97,13 @@ class SitterCreate(CreateView):
   model = Sitter
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
+  # def form_valid(self, form):
+  #   form.instance.owner = self.request.owner
+  #   return super().form_valid(form)
   def form_valid(self, form):
-    form.instance.owner = self.request.owner
-    return super().form_valid(form)
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class SitterUpdate(UpdateView):
   model = Sitter
@@ -137,3 +142,8 @@ def add_photo(request, sitter_id):
         except:
             print('An error occurred uploading file to S3')
     return redirect('detail', sitter_id=sitter_id)
+
+# pots list
+def posts_index(request):
+      posts = Post.objects.all()
+      return render(request, 'posts/index.html', { 'posts': posts })
