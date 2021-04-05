@@ -97,7 +97,7 @@ class SitterCreate(CreateView):
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
-    form.instance.owner = self.request.owner
+    form.instance.user = self.request.user
     return super().form_valid(form)
 
 class SitterUpdate(UpdateView):
@@ -107,6 +107,8 @@ class SitterUpdate(UpdateView):
 class SitterDelete(DeleteView):
   model = Sitter
   success_url = '/'
+
+
 
 def sitters_detail(request, sitter_id):
   sitter = Sitter.objects.get(id=sitter_id)
