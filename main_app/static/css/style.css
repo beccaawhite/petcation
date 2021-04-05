@@ -1,7 +1,7 @@
 body {
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
+    min-height: 100vh;
   }
   
 main {
@@ -14,9 +14,37 @@ footer.page-footer {
 }
 
 nav {
-    background-color:#3d405b ;
+    background-color:rgb(136, 198, 196) ;
 }
 
 .page-footer {
-    background-color:#3d405b ;
+    background-color:rgb(136, 198, 196) ;
 }
+
+/* Style Home Page */
+
+#home-background {
+    background-image: url("https://c4.wallpaperflare.com/wallpaper/378/85/136/dog-pug-funny-canine-wallpaper-preview.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: 100%;
+}
+
+.home-page {
+    height: 700px;
+    width: 50%;
+}
+
+.home-container {
+    width: 100%;
+}
+
+.home-page > h3 {
+    font-family: 'Francois One', sans-serif;
+    padding: 80px;
+    width: 500px;
+}
+
+/* Style Owner Profile Page */
