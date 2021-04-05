@@ -12,4 +12,5 @@ urlpatterns = [
     path('sitters/', views.sitters_index, name='sitters_index'),
     path('sitters/<int:sitter_id>/', views.sitters_detail, name='detail'),
     path('sitters/create/', views.SitterCreate.as_view(), name='sitters_create'),
+    path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
