@@ -61,13 +61,17 @@ class OwnerDelete(DeleteView):
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
 
-  # instatiate PetForm to be rendered in template
-  pet_form = PetForm()
   return render(request, 'owners/detail.html', {
+    'owner': owner,
+  })
+
+def pets_create(request, owner_id):
+  owner = Owner.objects.get(id=owner_id)
+  pet_form = PetForm()
+  return render(request, 'owners/pet_form.html', {
     'owner': owner,
     'pet_form': pet_form
   })
-
 
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
@@ -84,6 +88,7 @@ def add_pet(request, owner_id):
     new_pet.save()
   return redirect('detail', owner_id=owner_id)
 
+
 # Pet Views
 def pets_detail(request, pet_id):
   pet = Pet.objects.get(id=pet_id)
@@ -97,6 +102,7 @@ class SitterCreate(CreateView):
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
+
     form.instance.user = self.request.user
     return super().form_valid(form)
 
@@ -139,3 +145,8 @@ def add_photo(request, sitter_id):
         except:
             print('An error occurred uploading file to S3')
     return redirect('detail', sitter_id=sitter_id)
+
+# pots list
+def posts_index(request):
+      posts = Post.objects.all()
+      return render(request, 'posts/index.html', { 'posts': posts })
