@@ -25,13 +25,13 @@
             <li><a href="/posts">View All Petcations</a></li>
 
             {% if user.owner.id %}
-                <li><a href="{% url 'owners_create' %}">My Pet Profile</a></li>
+                <li><a href="/owners/{{owner.id}}">All Pet Owners</a></li>
             {% else %}
                 <li><a href="{% url 'owners_create' %}">Create Pet Owner Profile</a></li>
             {% endif %}
 
             {% if user.sitter.id %}
-                <li><a href="{% url 'sitters_create' %}">My Sitter Profile</a></li>
+                <li><a href="/sitters/{{sitter.id}}">All Pet Sitters</a></li>
             {% else %}
                 <li><a href="{% url 'sitters_create' %}">Create Pet Sitter Profile</a></li>
             {% endif %}

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
 <main class="container">
     <h1> Pet Owner List</h1>
     
@@ -7,10 +9,11 @@
         <div class="card">
             <div class="card-content">
                 <p>{{ owner.first_name }} is a pet owner</p>
+                <a href="/owners/{{owner.id}}">My profile</a>
             </div>
+
         </div>
-      </a>
+    {% endfor %}
 </main>
-{% endfor %}
 
 {% endblock %}
