@@ -28,7 +28,7 @@ urlpatterns = [
     path('owners/<int:owner_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sitters/<int:sitter_id>/add_sitter_photo/', views.add_sitter_photo, name='add_sitter_photo'),
     path('posts/', views.posts_index, name='index'),
-    
+    path('posts/<int:post_id>/show_interest/', views.show_interest, name='show_interest'),
 ]
  
 
