@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
   <title>Petcation</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
   <header class="navbar-fixed">
     <nav>
@@ -22,18 +24,18 @@
         <ul class="right">
           <li><a href="/about">About</a></li>
           {% if user.is_authenticated %}
-            <li><a href="/posts">View All Petcations</a></li>
-            
-            {% if user.owner.id %}
-                <li><a href="{% url 'owners_detail' user.owner.id %}">MY PROFILE</a></li>
-            {% elif user.sitter.id %}
-                <li><a href="{% url 'sitters_detail' user.sitter.id %}">MY PROFILE</a></li>
+          <li><a href="/posts">View All Petcations</a></li>
 
-            {% else %}
-                <li><a href="{% url 'owners_create' %}">Create Pet Owner Profile</a></li>
-                <li><a href="{% url 'sitters_create' %}">Create Pet Sitter Profile</a></li>
-            {% endif %}
-            
+          {% if user.owner.id %}
+            <li><a href="{% url 'owners_detail' user.owner.id %}">MY PROFILE</a></li>
+          {% elif user.sitter.id %}
+            <li><a href="{% url 'sitters_detail' user.sitter.id %}">MY PROFILE</a></li>
+
+          {% else %}
+            <li><a href="{% url 'owners_create' %}">Create Pet Owner Profile</a></li>
+            <li><a href="{% url 'sitters_create' %}">Create Pet Sitter Profile</a></li>
+          {% endif %}
+
 
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
@@ -43,10 +45,10 @@
         </ul>
       </div>
     </nav>
-  </header> 
-    {% block content %}
-    {% endblock %}
-  </main>
+  </header>
+  {% block content %}
+  {% endblock %}
+
   <footer class="page-footer">
     <div class="right">All Rights Reserved, &copy; 2021 Petcation &nbsp;</div>
   </footer>
