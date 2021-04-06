@@ -9,7 +9,7 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-              <a href="{% url 'owners_detail' user.owner.id %}">
+              <a href="{% url 'owners_detail' post.owner.id %}">
                 <h4>
                   Pet Owner: {{ post.owner }}
                 </h4>
@@ -19,8 +19,16 @@
               <p>End Date: {{ post.end_date }}</p>
               <p>Details: {{ post.details }}</p>
           </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
+          <div class="card-action">   
+            <h4>Interested Sitters:</h4>
+            <!-- Leaving the action empty makes the form post to the same url used to display it -->
+            <form action="" method="post">
+            <!-- Django requires the following for security purposes -->
+              {% csrf_token %}
+              {{ show_interest_form }}
+              <input type="checkbox" value="I'm Interested!" name="interested">
+            </form>
+            
           </div>
         </div>
       </div>
