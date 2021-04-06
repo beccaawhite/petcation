@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
-
-
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo
 from .forms import PetForm,PostingForm
-
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -95,23 +92,31 @@ def pets_detail(request, pet_id):
     'pet': pet
   })
 
+# def pet_update(request, pet_id):
+#   form = PetForm(request.POST)
+#   pet = Pet.objects.get(id=pet_id)
+#   if form.is_valid():
+#     edit_pet = form.save(commit=False)
+#     edit_pet.owner_id = pet.owner.id
+#     edit_pet.save()
+#   return redirect('pets_detail', pet_id=pet_id)
 
-def pet_update(request, pet_id):
-  form = PetForm(request.POST)
-  if form.is_valid():
-    # edit_pet = form.save(commit=False)
-    form.save()
-  return redirect('pets_detail', pet_id=pet_id)
+# def pets_update_form(request, pet_id):
+#   pet = Pet.objects.get(id=pet_id)
+#   pet_form = PetForm(instance=pet)
+#   return render(request, 'owners/pets/pet_form_edit.html', {
+#     'pet': pet,
+#     'pet_form': pet_form,
+#     'owner': pet.owner
+#   })
 
-def pets_update_form(request, pet_id):
-  print(request, ' this is the request')
-  pet = Pet.objects.get(id=pet_id)
-  pet_form = PetForm(instance=pet)
-  return render(request, 'owners/pets/pet_form_edit.html', {
-    'pet': pet,
-    'pet_form': pet_form
-  })
+class PetUpdate(UpdateView):
+  model = Pet
+  fields = ['name', 'pet_type', 'breed', 'age', 'gender', 'characteristics', 'care_instructions']
 
+class PetDelete(DeleteView):
+  model = Pet
+  success_url = '/owners/{owner_id}/'
 
 # Sitter Views
 class SitterCreate(CreateView):
