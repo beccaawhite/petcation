@@ -12,7 +12,11 @@
         <p>Characteristics: {{ pet.characteristics }}</p>
         <p>Care Instructions: {{ pet.care_instructions }}</p>
     </div>
-    <a href="{% url 'pets_update_form' pet.id %}">Edit Pet</a>
+    <div class="card-action">
+      <a href="{% url 'pets_update' pet.id %}">Edit</a>
+      <a href="{% url 'pets_delete' pet.id %}">Delete</a>
+    </div>
   </div>
 </main>
+
 {% endblock %}
