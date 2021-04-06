@@ -102,7 +102,6 @@ class SitterCreate(CreateView):
 
   def form_valid(self, form):
     form.instance.user = self.request.user
-    print(request.user)
     return super().form_valid(form)
 
 class SitterUpdate(UpdateView):
@@ -142,7 +141,7 @@ def add_photo(request, sitter_id):
             Photo.objects.create(url=url, sitter_pic_id=sitter_id)
         except:
             print('An error occurred uploading file to S3')
-    return redirect('detail', sitter_id=sitter_id)
+    return redirect('sitters_detail', sitter_id=sitter_id)
 
 # pots list
 def posts_index(request):
