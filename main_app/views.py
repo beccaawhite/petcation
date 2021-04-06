@@ -86,7 +86,7 @@ def add_pet(request, owner_id):
     new_pet = form.save(commit=False)
     new_pet.owner_id = owner_id
     new_pet.save()
-  return redirect('detail', owner_id=owner_id)
+  return redirect('owners_detail', owner_id=owner_id)
 
 # Pet Views
 def pets_detail(request, pet_id):
@@ -94,6 +94,24 @@ def pets_detail(request, pet_id):
   return render(request, 'owners/pets/detail.html', {
     'pet': pet
   })
+
+
+def pet_update(request, pet_id):
+  form = PetForm(request.POST)
+  if form.is_valid():
+    # edit_pet = form.save(commit=False)
+    form.save()
+  return redirect('pets_detail', pet_id=pet_id)
+
+def pets_update_form(request, pet_id):
+  print(request, ' this is the request')
+  pet = Pet.objects.get(id=pet_id)
+  pet_form = PetForm(instance=pet)
+  return render(request, 'owners/pets/pet_form_edit.html', {
+    'pet': pet,
+    'pet_form': pet_form
+  })
+
 
 # Sitter Views
 class SitterCreate(CreateView):
