@@ -25,6 +25,7 @@
           <li><a href="/posts">View All Petcations</a></li>
           {% if user.owner.id %}
             <li><a href="{% url 'owners_detail' user.owner.id %}">MY PROFILE</a></li>
+            <li><a href="{% url 'posts_create' user.owner.id %}">Add Post</a></li>
           {% elif user.sitter.id %}
             <li><a href="{% url 'sitters_detail' user.sitter.id %}">MY PROFILE</a></li>
           {% else %}
