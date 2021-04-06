@@ -103,11 +103,13 @@ class PetDelete(DeleteView):
 # Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
+
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
 
 class SitterUpdate(UpdateView):
   model = Sitter
@@ -129,13 +131,16 @@ def sitters_index(request):
   return render(request, 'sitters/index.html', { 'sitters': sitters })
 
 
-def add_photo(request, sitter_id):
+def add_photo(request, owner_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
+    # print(photo_file, "pphoto file")
     if photo_file:
         s3 = boto3.client('s3')
+        print(s3, "S3")
         # need a unique "key" for S3 / needs image file extension too
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        print(key, "KEY!")
         # just in case something goes wrong
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
@@ -143,10 +148,10 @@ def add_photo(request, sitter_id):
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
             print(url)
             # we can assign to cat_id or cat (if you have a cat object)
-            Photo.objects.create(url=url, sitter_pic_id=sitter_id)
+            Photo.objects.create(url=url, owner_id=owner_id)
         except:
             print('An error occurred uploading file to S3')
-    return redirect('sitters_detail', sitter_id=sitter_id)
+    return redirect('owners_detail', owner_id=owner_id)
 
 
 #creating post by owner

@@ -25,6 +25,7 @@ class Sitter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    url = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     about = models.TextField(max_length=600)
     sit_count = models.IntegerField(null=True)
@@ -65,7 +66,7 @@ class Post(models.Model):
  
 class Photo(models.Model):
     url = models.CharField(max_length=200)
-    sitter_pic = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
+        return f"Photo for owner_id: {self.owner_id} @{self.url}"

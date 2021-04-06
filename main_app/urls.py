@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -23,7 +25,7 @@ urlpatterns = [
     path('sitters/create/', views.SitterCreate.as_view(), name='sitters_create'),
     path('sitters/<int:pk>/update/', views.SitterUpdate.as_view(), name='sitters_update'),
     path('sitters/<int:pk>/delete/', views.SitterDelete.as_view(), name='sitters_delete'),
-    path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('owners/<int:owner_id>/add_photo/', views.add_photo, name='add_photo'),
     path('posts/', views.posts_index, name='index'),
     path('posts/<int:post_id>/show_interest/', views.show_interest, name='show_interest'),
 ]
