@@ -25,7 +25,7 @@ urlpatterns = [
     path('sitters/create/', views.SitterCreate.as_view(), name='sitters_create'),
     path('sitters/<int:pk>/update/', views.SitterUpdate.as_view(), name='sitters_update'),
     path('sitters/<int:pk>/delete/', views.SitterDelete.as_view(), name='sitters_delete'),
-    path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('owners/<int:owner_id>/add_photo/', views.add_photo, name='add_photo'),
     path('posts/', views.posts_index, name='index'),
     
 ]
