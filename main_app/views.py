@@ -182,15 +182,18 @@ def posts_index(request):
   show_interest_form = ShowInterestForm()
   return render(request, 'posts/index.html', { 
     'posts': posts,
-    'show_interest_form': show_interest_form,
+    'show_interest_form': show_interest_form, 
   })
 
 def show_interest(request):
-  form = ShowInterestForm(request.POST)
-  if form.is_valid():
+  context = {}
+  context['form'] = ShowInterestForm()
+  # form = ShowInterestForm(request.POST)
+  # if form.is_valid():
     # don't save the form to the db until it
     # has the cat_id assigned
-    show_interest = form.save(commit=False)
-    show_interest.sitter_id = sitter_id
-    show_interest.save()
-  return redirect('posts', sitter_id=sitter_id)
+    # show_interest = form.save(commit=False)
+    # show_interest.sitter_id = sitter_id
+    # show_interest.save()
+
+  return render(request, 'posts/index.html', context)

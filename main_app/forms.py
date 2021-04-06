@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import Pet, Post, Sitter
+from django import forms
+from .models import Pet, Post, ShowInterest
 
 class PetForm(ModelForm):
   class Meta:
@@ -11,7 +12,12 @@ class PostingForm(ModelForm):
     model = Post
     fields = ['start_date', 'end_date','details'] 
 
-class ShowInterestForm(ModelForm):
+class ShowInterestForm(forms.ModelForm):
+  is_interested = forms.BooleanField()
   class Meta:
-    model = Sitter
-    fields = ['first_name', 'last_name']
+    model = ShowInterest
+    fields = ['is_interested']
+
+  def __init__(self, *args, **kwargs):
+        super(ShowInterestForm, self).__init__(*args, **kwargs)
+        self.fields['is_interested'].widget = forms.CheckboxSelectMultiple()
