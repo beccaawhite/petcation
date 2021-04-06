@@ -13,6 +13,7 @@ urlpatterns = [
     path('owners/<int:pk>/delete/', views.OwnerDelete.as_view(), name='owners_delete'),
     path('owners/<int:owner_id>/pet_create/', views.pets_create, name='pets_create'),
     path('owners/<int:owner_id>/add_pet/', views.add_pet, name='add_pet'),
+    path('owners/<int:owner_id>/add_posting/', views.add_posting, name='add_posting'),
     path('pets/<int:pet_id>/pet_update_form/', views.pets_update_form, name='pets_update_form'),
     path('pets/<int:pet_id>/pet_update/', views.pet_update, name='pets_update'),
     path('pets/<int:pet_id>/', views.pets_detail, name='pets_detail'),
@@ -23,5 +24,7 @@ urlpatterns = [
     path('sitters/<int:pk>/delete/', views.SitterDelete.as_view(), name='sitters_delete'),
     path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
     path('posts/', views.posts_index, name='index'),
- ]
+    # path('posts/create/', views.PostCreate.as_view(), name='posts_create'),
+]
+ 
 

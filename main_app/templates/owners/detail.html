@@ -41,6 +41,9 @@
   </a>
   {% endfor %}
   <a href="{% url 'pets_create' owner.id %}">Add Pet</a>
+  <br>
+
+  <a href="{% url 'add_posting' owner.id %}">Add Post</a>
 
 </main>
 {% endblock %}

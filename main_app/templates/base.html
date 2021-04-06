@@ -24,6 +24,7 @@
           {% if user.is_authenticated %}
             <li><a href="/posts">View All Petcations</a></li>
             
+            
             {% if user.owner.id %}
                 <li><a href="{% url 'owners_detail' user.owner.id %}">MY PROFILE</a></li>
             {% elif user.sitter.id %}
