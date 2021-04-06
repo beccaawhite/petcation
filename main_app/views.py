@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo
 from .forms import PetForm
+from django.core.files.images import get_image_dimensions
 
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -116,11 +117,13 @@ def pets_update_form(request, pet_id):
 # Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
+
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
 
 class SitterUpdate(UpdateView):
   model = Sitter
