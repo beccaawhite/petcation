@@ -86,7 +86,7 @@ def add_pet(request, owner_id):
     new_pet = form.save(commit=False)
     new_pet.owner_id = owner_id
     new_pet.save()
-  return redirect('detail', owner_id=owner_id)
+  return redirect('owners_detail', owner_id=owner_id)
 
 # Pet Views
 def pets_detail(request, pet_id):
@@ -120,7 +120,6 @@ class SitterCreate(CreateView):
 
   def form_valid(self, form):
     form.instance.user = self.request.user
-    print(request.user)
     return super().form_valid(form)
 
 class SitterUpdate(UpdateView):
@@ -160,7 +159,7 @@ def add_photo(request, sitter_id):
             Photo.objects.create(url=url, sitter_pic_id=sitter_id)
         except:
             print('An error occurred uploading file to S3')
-    return redirect('detail', sitter_id=sitter_id)
+    return redirect('sitters_detail', sitter_id=sitter_id)
 
 #creating post by owner
 def add_posting(request, owner_id):
