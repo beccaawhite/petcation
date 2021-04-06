@@ -38,6 +38,7 @@ class Sitter(models.Model):
     def get_absolute_url(self):
         return reverse('sitters_detail', kwargs={'sitter_id': self.id})
 
+
 class Pet(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
