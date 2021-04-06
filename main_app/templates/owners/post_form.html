@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  
-  <form action="{% url 'add_posting' owner.id %}" method="post">
+
+<main class="container">
+
+  {% if user.owner.id %}
+    <h1>Owner: <span class="teal-text">{{owner.first_name}}</span></h1>
+  {% else %}
     
+  {% endif %}
+  <form action="{% url 'add_posting' owner.id %}" method="post">
     {% csrf_token %}
     <table>
       {{ post_form.as_table }}
     </table>
-    
     <input type="submit" value="Submit!" class="btn">
   </form>
 
+</main>
   <script>
     // create a datepicker startdate
     var dateStart = document.getElementById('id_start_date');
