@@ -103,11 +103,13 @@ class PetDelete(DeleteView):
 # Sitter Views
 class SitterCreate(CreateView):
   model = Sitter
+
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
 
 class SitterUpdate(UpdateView):
   model = Sitter
