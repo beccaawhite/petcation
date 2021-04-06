@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Owner, Sitter, Pet, Post, Photo
+from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto
 from .forms import PetForm,PostingForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -152,6 +152,23 @@ def add_photo(request, owner_id):
         except:
             print('An error occurred uploading file to S3')
     return redirect('owners_detail', owner_id=owner_id)
+
+def add_sitter_photo(request, sitter_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        print(s3, "S3")
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        print(key, "KEY!")
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            print(url, "URL!!!!!!!!!")
+            SitterPhoto.objects.create(url=url, sitter_id=sitter_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('sitters_detail', sitter_id=sitter_id)
+
 
 
 #creating post by owner

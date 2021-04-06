@@ -70,3 +70,10 @@ class Photo(models.Model):
 
     def __str__(self):
         return f"Photo for owner_id: {self.owner_id} @{self.url}"
+
+class SitterPhoto(models.Model):
+    url = models.CharField(max_length=200)
+    sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
