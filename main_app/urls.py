@@ -25,7 +25,7 @@ urlpatterns = [
     path('sitters/<int:pk>/delete/', views.SitterDelete.as_view(), name='sitters_delete'),
     path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
     path('posts/', views.posts_index, name='index'),
-    
+    path('posts/<int:post_id>/show_interest/', views.show_interest, name='show_interest'),
 ]
  
 

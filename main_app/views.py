@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo
-from .forms import PetForm,PostingForm
+from .forms import PetForm,PostingForm, ShowInterestForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -173,5 +173,19 @@ def add_posting(request, owner_id):
   
 # pots list
 def posts_index(request):
-      posts = Post.objects.all()
-      return render(request, 'posts/index.html', { 'posts': posts })
+  posts = Post.objects.all()
+  show_interest_form = ShowInterestForm()
+  return render(request, 'posts/index.html', { 
+    'posts': posts,
+    'show_interest_form': show_interest_form,
+  })
+
+def show_interest(request):
+  form = ShowInterestForm(request.POST)
+  if form.is_valid():
+    # don't save the form to the db until it
+    # has the cat_id assigned
+    show_interest = form.save(commit=False)
+    show_interest.sitter_id = sitter_id
+    show_interest.save()
+  return redirect('posts', sitter_id=sitter_id)
