@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container">
+
+  {% if user.owner.id %}
+    <h1>Owner: <span class="teal-text">{{owner.first_name}}</span></h1>
+  {% else %}
+    
+  {% endif %}
+  <form action="{% url 'add_posting' owner.id %}" method="post">
+    {% csrf_token %}
+    <table>
+      {{ post_form.as_table }}
+    </table>
+    <input type="submit" value="Submit!" class="btn">
+  </form>
+
+</main>
+  <script>
+    // create a datepicker startdate
+    var dateStart = document.getElementById('id_start_date');
+    M.Datepicker.init(dateStart, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    });
+    // create a datepicker enddate
+    var dateEnd = document.getElementById('id_end_date');
+    M.Datepicker.init(dateEnd, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    });
+  </script>
+{% endblock %}

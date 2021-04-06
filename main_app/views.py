@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect
-
-
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo
-from .forms import PetForm
-from django.core.files.images import get_image_dimensions
-
+from .forms import PetForm,PostingForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -96,23 +92,13 @@ def pets_detail(request, pet_id):
     'pet': pet
   })
 
+class PetUpdate(UpdateView):
+  model = Pet
+  fields = ['name', 'pet_type', 'breed', 'age', 'gender', 'characteristics', 'care_instructions']
 
-def pet_update(request, pet_id):
-  form = PetForm(request.POST)
-  if form.is_valid():
-    # edit_pet = form.save(commit=False)
-    form.save()
-  return redirect('pets_detail', pet_id=pet_id)
-
-def pets_update_form(request, pet_id):
-  print(request, ' this is the request')
-  pet = Pet.objects.get(id=pet_id)
-  pet_form = PetForm(instance=pet)
-  return render(request, 'owners/pets/pet_form_edit.html', {
-    'pet': pet,
-    'pet_form': pet_form
-  })
-
+class PetDelete(DeleteView):
+  model = Pet
+  success_url = '/owners/{owner_id}/'
 
 # Sitter Views
 class SitterCreate(CreateView):
@@ -164,6 +150,29 @@ def add_photo(request, sitter_id):
             print('An error occurred uploading file to S3')
     return redirect('sitters_detail', sitter_id=sitter_id)
 
+
+#creating post by owner
+def posts_create(request, owner_id):
+      owner = Owner.objects.get(id=owner_id)
+      post_form = PostingForm()
+      return render(request, 'owners/post_form.html', {
+        'owner': owner,
+        'post_form': post_form
+      })
+
+#adding post by owner
+def add_posting(request, owner_id):
+      	
+  form = PostingForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    new_posting = form.save(commit=False)
+    new_posting.owner_id = owner_id
+    new_posting.save()
+  # return redirect('detail', owner_id=owner_id)
+  return redirect('index')
+
+  
 # pots list
 def posts_index(request):
       posts = Post.objects.all()

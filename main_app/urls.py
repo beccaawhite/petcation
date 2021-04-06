@@ -14,10 +14,12 @@ urlpatterns = [
     path('owners/<int:pk>/update/', views.OwnerUpdate.as_view(), name='owners_update'),
     path('owners/<int:pk>/delete/', views.OwnerDelete.as_view(), name='owners_delete'),
     path('owners/<int:owner_id>/pet_create/', views.pets_create, name='pets_create'),
-    path('owners/<int:owner_id>/add_pet/', views.add_pet, name='add_pet'),
-    path('pets/<int:pet_id>/pet_update_form/', views.pets_update_form, name='pets_update_form'),
-    path('pets/<int:pet_id>/pet_update/', views.pet_update, name='pets_update'),
+    path('owners/<int:owner_id>/add_pet/', views.add_pet, name='add_pet'),    
+    path('owners/<int:owner_id>/post_create/', views.posts_create, name='posts_create'),
+    path('owners/<int:owner_id>/add_posting/', views.add_posting, name='add_posting'),
     path('pets/<int:pet_id>/', views.pets_detail, name='pets_detail'),
+    path('pets/<int:pk>/update/', views.PetUpdate.as_view(), name='pets_update'),    
+    path('pets/<int:pk>/delete/', views.PetDelete.as_view(), name='pets_delete'),
     # path('sitters/', views.sitters_index, name='sitters_index'),
     path('sitters/<int:sitter_id>/', views.sitters_detail, name='sitters_detail'),
     path('sitters/create/', views.SitterCreate.as_view(), name='sitters_create'),
@@ -25,6 +27,7 @@ urlpatterns = [
     path('sitters/<int:pk>/delete/', views.SitterDelete.as_view(), name='sitters_delete'),
     path('sitters/<int:sitter_id>/add_photo/', views.add_photo, name='add_photo'),
     path('posts/', views.posts_index, name='index'),
- ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+    
+]
+ 
 
