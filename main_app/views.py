@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
-
-
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo
-from .forms import PetForm
+from .forms import PetForm,PostingForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -150,6 +148,29 @@ def add_photo(request, sitter_id):
             print('An error occurred uploading file to S3')
     return redirect('sitters_detail', sitter_id=sitter_id)
 
+
+#creating post by owner
+def posts_create(request, owner_id):
+      owner = Owner.objects.get(id=owner_id)
+      post_form = PostingForm()
+      return render(request, 'owners/post_form.html', {
+        'owner': owner,
+        'post_form': post_form
+      })
+
+#adding post by owner
+def add_posting(request, owner_id):
+      	
+  form = PostingForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    new_posting = form.save(commit=False)
+    new_posting.owner_id = owner_id
+    new_posting.save()
+  # return redirect('detail', owner_id=owner_id)
+  return redirect('index')
+
+  
 # pots list
 def posts_index(request):
       posts = Post.objects.all()
