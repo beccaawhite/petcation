@@ -7,10 +7,16 @@ from django.contrib.auth.forms import UserCreationForm
 
 import uuid
 import boto3
-S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'beccaabucket'
+
+# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+# BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
+# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+# BUCKET = 'ninascats'
+
+S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'beccaabucket'
 
 # Define the home view
 def home(request):
@@ -239,26 +245,26 @@ def posts_index(request):
   })
 
 def posts_detail(request, post_id):
+  # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
+  
   show_interest_form = ShowInterestForm()
   return render(request, 'posts/detail.html', {
     'post': post,
-    'show_interest_form': show_interest_form
+    'show_interest_form': show_interest_form,
   })
 
-def show_interest(request):
-  context = {}
-  context['form'] = ShowInterestForm()
-  is_interested
-  # form = ShowInterestForm(request.POST)
-  # if form.is_valid():
-    # don't save the form to the db until it
-    # has the cat_id assigned
-    # show_interest = form.save(commit=False)
-    # show_interest.sitter_id = sitter_id
-    # show_interest.save()
 
-  return render(request, 'posts/detail.html', context)
+def show_interest(request, post_id):
+  print(request.user.id, ' THIS IS REQ.USER')
+  form = ShowInterestForm(request.POST)
+  if form.is_valid():
+    show_interest = form.save(commit=False)
+    show_interest.sitter_id = request.user.id
+    show_interest.post_id = post_id
+    show_interest.save()
+  return redirect('posts_detail', post_id=post_id)
+
 
 class PostUpdate(UpdateView):
   model = Post

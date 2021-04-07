@@ -1,8 +1,7 @@
 from django.forms import ModelForm
-from django import forms
+# from django import forms
 from .models import Pet, Post, ShowInterest
 
-IS_INTERESTED = ['Yes', 'No']
 
 class PetForm(ModelForm):
   class Meta:
@@ -14,20 +13,8 @@ class PostingForm(ModelForm):
     model = Post
     fields = ['start_date', 'end_date','details'] 
 
-class ShowInterestForm(forms.ModelForm):
-  # is_interested = forms.MultipleChoiceField(
-  #   required=False,
-  #   widget=forms.CheckboxSelectMultiple,
-  #   choices=IS_INTERESTED,
-  # )
-
-  is_interested = forms.BooleanField(required=False)
-
+class ShowInterestForm(ModelForm):
   class Meta:
     model = ShowInterest
     fields = ['is_interested']
-
-  def __init__(self, *args, **kwargs):
-        super(ShowInterestForm, self).__init__(*args, **kwargs)
-        self.fields['is_interested'].widget = forms.CheckboxInput()
 

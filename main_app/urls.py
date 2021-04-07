@@ -29,7 +29,6 @@ urlpatterns = [
     path('sitters/<int:sitter_id>/add_sitter_photo/', views.add_sitter_photo, name='add_sitter_photo'),
     path('sitters/<int:sitter_id>/add_sitter_profile/', views.add_sitter_profile, name='add_sitter_profile'),
     path('owners/<int:owner_id>/add_owner_profile/', views.add_owner_profile, name='add_owner_profile'),
-
     path('posts/', views.posts_index, name='index'),
     path('posts/<int:post_id>/', views.posts_detail, name='posts_detail'),
     path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name='posts_update'),
