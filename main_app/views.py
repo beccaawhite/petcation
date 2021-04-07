@@ -249,7 +249,6 @@ def posts_detail(request, post_id):
 def show_interest(request):
   context = {}
   context['form'] = ShowInterestForm()
-  is_interested
   # form = ShowInterestForm(request.POST)
   # if form.is_valid():
     # don't save the form to the db until it
