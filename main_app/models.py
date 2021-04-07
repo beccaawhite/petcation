@@ -65,7 +65,7 @@ class Post(models.Model):
         return self.details
 
     def get_absolute_url(self):
-        return reverse('index', kwargs={'post_id': self.id})
+        return reverse('posts_detail', kwargs={'post_id': self.id})
 
 class ShowInterest(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
