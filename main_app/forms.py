@@ -1,8 +1,9 @@
 from django.forms import ModelForm
-from django import forms
+# from django import forms
 from .models import Pet, Post, ShowInterest
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
@@ -10,7 +11,6 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2' )
-
 
 
 # IS_INTERESTED = ['Yes', 'No']
@@ -25,20 +25,8 @@ class PostingForm(ModelForm):
     model = Post
     fields = ['start_date', 'end_date','details'] 
 
-class ShowInterestForm(forms.ModelForm):
-  # is_interested = forms.MultipleChoiceField(
-  #   required=False,
-  #   widget=forms.CheckboxSelectMultiple,
-  #   choices=IS_INTERESTED,
-  # )
-
-  is_interested = forms.BooleanField(required=False)
-
+class ShowInterestForm(ModelForm):
   class Meta:
     model = ShowInterest
     fields = ['is_interested']
-
-  def __init__(self, *args, **kwargs):
-        super(ShowInterestForm, self).__init__(*args, **kwargs)
-        self.fields['is_interested'].widget = forms.CheckboxInput()
 

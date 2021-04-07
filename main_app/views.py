@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto
+from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto, SitterProfile, OwnerProfile
 from .forms import PetForm,PostingForm, ShowInterestForm, SignUpForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -8,10 +8,16 @@ from django.contrib.auth.forms import UserCreationForm
 
 import uuid
 import boto3
+
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
-S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
-BUCKET = 'atusacatcollector'
+# S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+# BUCKET = 'atusacatcollector'
+# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+# BUCKET = 'ninascats'
+
+S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'beccaabucket'
 
 # Define the home view
 def home(request):
@@ -135,7 +141,7 @@ def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)
   return render(request, 'sitters/index.html', { 'sitters': sitters })
 
-
+#adds photos of pets to owners profile 
 def add_photo(request, owner_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -158,6 +164,42 @@ def add_photo(request, owner_id):
             print('An error occurred uploading file to S3')
     return redirect('owners_detail', owner_id=owner_id)
 
+#adds owner profile picture
+def add_owner_profile(request, owner_id):
+    photo_file = request.FILES.get('photo-file', None)
+    # print(photo_file, "pphoto file")
+    if photo_file:
+        s3 = boto3.client('s3')
+        print(s3, "S3")
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        print(key, "KEY!")
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            print(url, "URL!!!!")
+            OwnerProfile.objects.create(url=url, owner_id=owner_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('owners_detail', owner_id=owner_id)
+
+#adds siter profile picture
+def add_sitter_profile(request, sitter_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        print(s3, "S3")
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        print(key, "KEY!")
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            print(url, "URL!!!!!!!!!")
+            SitterProfile.objects.create(url=url, sitter_id=sitter_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('sitters_detail', sitter_id=sitter_id)
+
+# sitter adds pictures to bottom
 def add_sitter_photo(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -206,25 +248,26 @@ def posts_index(request):
   })
 
 def posts_detail(request, post_id):
+  # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
+  
   show_interest_form = ShowInterestForm()
   return render(request, 'posts/detail.html', {
     'post': post,
-    'show_interest_form': show_interest_form
+    'show_interest_form': show_interest_form,
   })
 
-def show_interest(request):
-  context = {}
-  context['form'] = ShowInterestForm()
-  # form = ShowInterestForm(request.POST)
-  # if form.is_valid():
-    # don't save the form to the db until it
-    # has the cat_id assigned
-    # show_interest = form.save(commit=False)
-    # show_interest.sitter_id = sitter_id
-    # show_interest.save()
 
-  return render(request, 'posts/detail.html', context)
+def show_interest(request, post_id):
+  print(request.user.id, ' THIS IS REQ.USER')
+  form = ShowInterestForm(request.POST)
+  if form.is_valid():
+    show_interest = form.save(commit=False)
+    show_interest.sitter_id = request.user.id
+    show_interest.post_id = post_id
+    show_interest.save()
+  return redirect('posts_detail', post_id=post_id)
+
 
 class PostUpdate(UpdateView):
   model = Post

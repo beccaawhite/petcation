@@ -4,7 +4,10 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
 
-
+IS_INTERESTED = (
+    ('Y', 'Yes'),
+    ('N', 'No')
+)
 
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -60,6 +63,7 @@ class Post(models.Model):
     end_date = models.DateField('end date')
     details = models.TextField(max_length=600)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    sitters = models.ManyToManyField(Sitter)
 
     def __str__(self):
         return self.details
@@ -70,9 +74,16 @@ class Post(models.Model):
 class ShowInterest(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    is_interested = models.BooleanField('interest status', default=False)
+    is_interested = models.CharField(
+        max_length=1,
+        choices=IS_INTERESTED,
+        default=IS_INTERESTED[0][1]
+    )
 
- 
+    def __str__(self):
+        return f"{self.get_is_interested_display()}"
+
+# owners can post pet photos on bottom of their profile
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
@@ -80,9 +91,26 @@ class Photo(models.Model):
     def __str__(self):
         return f"Photo for owner_id: {self.owner_id} @{self.url}"
 
+# sitters profile picture
 class SitterPhoto(models.Model): 
     url = models.CharField(max_length=200)
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
+
+# class that hold the sitter profile picture
+class SitterProfile(models.Model): 
+    url = models.CharField(max_length=200)
+    sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
+
+# owners profile picture
+class OwnerProfile(models.Model):
+    url = models.CharField(max_length=200)
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for owner_id: {self.owner_id} @{self.url}"
