@@ -256,10 +256,10 @@ def show_interest(request, post_id):
   form = ShowInterestForm(request.POST)
   if form.is_valid():
     show_interest = form.save(commit=False)
-    show_interest.post_id = post_id
     show_interest.sitter_id = request.user.id
+    show_interest.post_id = post_id
     show_interest.save()
-  return redirect(request, 'posts_detail', post_id=post_id)
+  return redirect('posts_detail', post_id=post_id)
 
 class PostUpdate(UpdateView):
   model = Post
