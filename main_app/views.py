@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto
-from .forms import PetForm,PostingForm, ShowInterestForm
+from .forms import PetForm,PostingForm, ShowInterestForm, SignUpForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+
 
 import uuid
 import boto3
@@ -25,7 +26,8 @@ def signup(request):
   if request.method == 'POST':
     # This is how to create a 'user' form object
     # that includes the data from the browser
-    form = UserCreationForm(request.POST)
+    # form = UserCreationForm(request.POST)
+    form = SignUpForm(request.POST)
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
@@ -37,6 +39,7 @@ def signup(request):
   # A bad POST or a GET request, so render signup.html with an empty form
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
+  print(context, 'this is context')
   return render(request, 'registration/signup.html', context)
 
 
