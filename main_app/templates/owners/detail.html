@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 <main class="container profile-page">
-  
+
+
+  <h5>Profile Pic:</h5>
+  <div>
+    {% for profilepic in owner.ownerprofile_set.all %}
+    <img class="responsive-img" src="{{profilepic.url}}">
+    {% empty %}
+
+      <div class="card-panel teal-text center-align">No Prof Pic</div>
+      <form action="{% url 'add_owner_profile' owner.id %}" enctype="multipart/form-data" method="POST"
+        class="card-panel">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class="btn" value="Upload Profile Picture">
+      </form>
+    {% endfor %}
+    
+  </div>
+
+
 
   <div class="row">
     <div class="col s6 card">
@@ -11,10 +31,10 @@
         <p>About: {{ owner.about }}</p>
       </div>
       {% if user.owner.id %}
-        <div class="card-action">
-          <a href="{% url 'owners_update' owner.id %}">Edit</a>
-          <a href="{% url 'owners_delete' owner.id %}">Delete</a>
-        </div>
+      <div class="card-action">
+        <a href="{% url 'owners_update' owner.id %}">Edit</a>
+        <a href="{% url 'owners_delete' owner.id %}">Delete</a>
+      </div>
       {% endif %}
     </div>
   </div>
@@ -24,43 +44,43 @@
     </iframe>
   </div>
 
-  
+
   <h3>Pet List</h3>
   {% for pet in owner.pet_set.all %}
   <a href="{% url 'pets_detail' pet.id %}">
     <div class="card">
-        <div class="card-content">
-            <span class="card-title">{{ pet.name }}</span>
-            <p>Type: {{ pet.pet_type }}</p>
-            <p>Breed: {{ pet.breed }}</p>
-            <p>Age: {{ pet.age }}</p>
-            <p>Gender: {{ pet.gender }}</p>
-        </div>
+      <div class="card-content">
+        <span class="card-title">{{ pet.name }}</span>
+        <p>Type: {{ pet.pet_type }}</p>
+        <p>Breed: {{ pet.breed }}</p>
+        <p>Age: {{ pet.age }}</p>
+        <p>Gender: {{ pet.gender }}</p>
+      </div>
     </div>
   </a>
   {% endfor %}
   {% if user.owner.id %}
-    <a href="{% url 'pets_create' owner.id %}">Add Pet</a>
+  <a href="{% url 'pets_create' owner.id %}">Add Pet</a>
   {% endif %}
   <br>
 
   <h4>Pet Photos:</h4>
   {% for photo in owner.photo_set.all %}
-      
-    <img class="responsive-img card-panel" src="{{photo.url}}">
+
+  <img class="responsive-img card-panel" src="{{photo.url}}">
   {% empty %}
-    <div class="card-panel teal-text center-align">No Pet Photos</div>
+  <div class="card-panel teal-text center-align">No Pet Photos</div>
   {% endfor %}
   {% if user.owner.id %}
-    <form action="{% url 'add_photo' owner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-      {% csrf_token %}
-      <input type="file" name="photo-file">
-      <br><br>
-      <input type="submit" class="btn" value="Upload Photo">
-    </form>
+  <form action="{% url 'add_photo' owner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    {% csrf_token %}
+    <input type="file" name="photo-file">
+    <br><br>
+    <input type="submit" class="btn" value="Upload Photo">
+  </form>
   {% endif %}
-  
-  
+
+
 
 </main>
 {% endblock %}
