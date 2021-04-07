@@ -16,6 +16,7 @@
             <p>Start Date: {{ post.start_date }}</p>
             <p>End Date: {{ post.end_date }}</p>
             <p>Details: {{ post.details }}</p>
+            <p>Email: <a href="mailto:{{ post.owner.user.email }}">{{ post.owner.user.email }}</a></p>
           </div>
         {% if user.owner.id %}
         <div class="card-action">
