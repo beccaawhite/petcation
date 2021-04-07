@@ -220,3 +220,11 @@ def show_interest(request):
     # show_interest.save()
 
   return render(request, 'posts/detail.html', context)
+
+class PostUpdate(UpdateView):
+  model = Post
+  fields = ['start_date', 'end_date', 'details']
+
+class PostDelete(DeleteView):
+  model = Post
+  success_url = '/posts/'
