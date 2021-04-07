@@ -3,6 +3,24 @@
 
 <main class="container">
   <h1>Welcome {{ sitter.first_name }} </h1>
+  <div>
+    <h5>Profile Picture:</h5>
+    {% for profilepic in sitter.sitterprofile_set.all %}
+      <img class="responsive-img card-panel" src="{{profilepic.url}}">
+    {% empty %}
+      <div class="card-panel teal-text center-align">No profile picture</div>
+      <form action="{% url 'add_sitter_photo' sitter.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class="btn" value="Upload Profile Photo">
+      </form>
+    {% endfor %}
+  </div>
+
+
+
+
 
   
   <div class="row">
