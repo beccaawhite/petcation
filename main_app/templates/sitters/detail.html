@@ -14,10 +14,12 @@
         <p>Pet Experience: {{ sitter.pet_experience }}</p>
         <p>About: {{ sitter.about }}</p>
       </div>
-      <div class="card-action">
-        <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
-        <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
-      </div>
+      {% if user.sitter.id %}
+        <div class="card-action">
+          <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
+          <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
+        </div>
+      {% endif %}
     </div>
     <iframe width="450" height="500" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAni-2dMS-1jCp_p8xumM82vShRZbY_CgU
             &q=Space+Needle,{{sitter.city}}">
@@ -30,12 +32,14 @@
     {% empty %}
       <div class="card-panel teal-text center-align">Add pictures of your Petcation experience</div>
     {% endfor %} 
-    <form action="{% url 'add_sitter_photo' sitter.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-      {% csrf_token %}
-      <input type="file" name="photo-file">
-      <br><br>
-      <input type="submit" class="btn" value="Upload Photo">
-  </form>
+    {% if user.sitter.id %}
+      <form action="{% url 'add_sitter_photo' sitter.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class="btn" value="Upload Photo">
+      </form>
+    {% endif %}
   </div>
 
 
