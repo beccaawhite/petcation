@@ -48,3 +48,14 @@ nav {
 }
 
 /* Style Owner Profile Page */
+
+
+/* Style Petcations */
+.flex-display {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.petcation-card {
+    margin: 10px;
+}
