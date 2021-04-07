@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <main class="container profile-page">
-
-
-  <h5>Profile Pic:</h5>
-  <div>
+  <br>
+  <div class="col s12" style="text-align: center;">
     {% for profilepic in owner.ownerprofile_set.all %}
-    <img class="responsive-img" src="{{profilepic.url}}">
+      <img class="responsive-img"  style="max-width: 175px;" src="{{profilepic.url}}">
+      <p>{{ owner.first_name }} {{ owner.last_name }}</p>
     {% empty %}
-
+      <img class="circle responsive-img" style="max-width: 150px;" id="profilepicture" src="/static/css/profilePlaceholder.png">
+      <p>{{ owner.first_name }} {{ owner.last_name }}</p>
       <div class="card-panel teal-text center-align">No Prof Pic</div>
       <form action="{% url 'add_owner_profile' owner.id %}" enctype="multipart/form-data" method="POST"
         class="card-panel">
@@ -18,13 +18,11 @@
         <input type="submit" class="btn" value="Upload Profile Picture">
       </form>
     {% endfor %}
-    
   </div>
 
 
-
   <div class="row">
-    <div class="col s6 card">
+    <div class="col s8 card">
       <div class="card-content">
         <p>Name: {{ owner.first_name }}</p>
         <p>Location: {{ owner.city }}</p>
@@ -37,11 +35,11 @@
       </div>
       {% endif %}
     </div>
-  </div>
-  <div>
-    <iframe width="450" height="500" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAni-2dMS-1jCp_p8xumM82vShRZbY_CgU
-            &q=Space+Needle,{{sitter.city}}">
+    <div class="col s4">
+      <iframe width="250" height="250" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAni-2dMS-1jCp_p8xumM82vShRZbY_CgU
+      &q=Space+Needle,{{sitter.city}}">
     </iframe>
+    </div>
   </div>
 
 
@@ -65,20 +63,19 @@
   <br>
 
   <h4>Pet Photos:</h4>
-  {% for photo in owner.photo_set.all %}
-
-  <img class="responsive-img card-panel" src="{{photo.url}}">
-  {% empty %}
-  <div class="card-panel teal-text center-align">No Pet Photos</div>
-  {% endfor %}
-  {% if user.owner.id %}
-  <form action="{% url 'add_photo' owner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-    {% csrf_token %}
-    <input type="file" name="photo-file">
-    <br><br>
-    <input type="submit" class="btn" value="Upload Photo">
-  </form>
-  {% endif %}
+    {% for photo in owner.photo_set.all %}
+      <img class="responsive-img" style="max-width: 250px; max-height: 250px;" src="{{photo.url}}">
+    {% empty %}
+      <div class="card-panel teal-text center-align">No Pet Photos</div>
+    {% endfor %}
+    {% if user.owner.id %}
+      <form action="{% url 'add_photo' owner.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class="btn" value="Upload Photo">
+      </form>
+    {% endif %}
 
 
 

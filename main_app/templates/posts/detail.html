@@ -34,21 +34,25 @@
       {% csrf_token %}
         {# {{ show_interest_form.as_p }} #}
 
-        {{ form.non_field_errors }}
-        {{ form.source.errors }}
-        {{ form.source }}
+        {{ show_interest_form.non_field_errors }}
+        {{ show_interest_form.source.errors }}
+        {{ show_interest_form.source }}
         <p>
           <label>
-            <input type="checkbox" />
-            {{ form.is_interested.errors }}
-            {{ form.is_interested }}
+            
+            {{ show_interest_form.is_interested.errors }}
+            {{ show_interest_form.is_interested }}
             <span>is_interested </span>
           </label>
         </p>
-      <br>
-      <input type="checkbox" name="is_interested" {% if show_interest_form.is_interested.value %}checked{% endif %} />
-      <input type="submit" value="Interested!" class="btn">
-    </form>    
+        {% if show_interest_form.is_interested == true %}
+          <p>
+            {{ user.sitter.first_name }}
+          </p>
+        {% endif %}
+        <br>
+        <input type="submit" value="Interested!" class="btn">
+      </form>    
   </div>
 
 </main>
