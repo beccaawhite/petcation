@@ -59,3 +59,8 @@ nav {
 .petcation-card {
     margin: 10px;
 }
+
+#profilepicture {
+    max-height: 80px;
+    width: 80px;
+}

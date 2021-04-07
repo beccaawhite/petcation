@@ -32,6 +32,7 @@
     <form action="{% url 'show_interest' post.id %}" method="post">
     <!-- Django requires the following for security purposes -->
       {% csrf_token %}
+
       {{ show_interest_form.as_p }}
       <input type="submit" value="Submit" class="btn">
     </form>
@@ -50,7 +51,6 @@
       </tbody>
     </table> 
   </div>
-
 </main>
 <script>
   // initialize the interest select

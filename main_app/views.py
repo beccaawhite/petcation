@@ -7,13 +7,16 @@ from django.contrib.auth.forms import UserCreationForm
 
 import uuid
 import boto3
+
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
-S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-BUCKET = 'ninascats'
+# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+# BUCKET = 'ninascats'
 
+S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'beccaabucket'
 
 # Define the home view
 def home(request):
@@ -176,7 +179,7 @@ def add_owner_profile(request, owner_id):
             print('An error occurred uploading file to S3')
     return redirect('owners_detail', owner_id=owner_id)
 
-
+#adds siter profile picture
 def add_sitter_profile(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -188,12 +191,12 @@ def add_sitter_profile(request, sitter_id):
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
             print(url, "URL!!!!!!!!!")
-            SitterPhoto.objects.create(url=url, sitter_id=sitter_id)
+            SitterProfile.objects.create(url=url, sitter_id=sitter_id)
         except:
             print('An error occurred uploading file to S3')
     return redirect('sitters_detail', sitter_id=sitter_id)
 
-
+# sitter adds pictures to bottom
 def add_sitter_photo(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -205,7 +208,7 @@ def add_sitter_photo(request, sitter_id):
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
             print(url, "URL!!!!!!!!!")
-            SitterProfile.objects.create(url=url, sitter_id=sitter_id)
+            SitterPhoto.objects.create(url=url, sitter_id=sitter_id)
         except:
             print('An error occurred uploading file to S3')
     return redirect('sitters_detail', sitter_id=sitter_id)
@@ -251,6 +254,7 @@ def posts_detail(request, post_id):
     'show_interest_form': show_interest_form,
   })
 
+
 def show_interest(request, post_id):
   print(request.user.id, ' THIS IS REQ.USER')
   form = ShowInterestForm(request.POST)
@@ -260,6 +264,7 @@ def show_interest(request, post_id):
     show_interest.post_id = post_id
     show_interest.save()
   return redirect('posts_detail', post_id=post_id)
+
 
 class PostUpdate(UpdateView):
   model = Post

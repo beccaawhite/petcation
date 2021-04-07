@@ -83,7 +83,7 @@ class ShowInterest(models.Model):
     def __str__(self):
         return f"{self.get_is_interested_display()}"
 
- 
+# owners can post pet photos on bottom of their profile
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
@@ -91,6 +91,7 @@ class Photo(models.Model):
     def __str__(self):
         return f"Photo for owner_id: {self.owner_id} @{self.url}"
 
+# sitters profile picture
 class SitterPhoto(models.Model): 
     url = models.CharField(max_length=200)
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
@@ -98,6 +99,7 @@ class SitterPhoto(models.Model):
     def __str__(self):
         return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
 
+# class that hold the sitter profile picture
 class SitterProfile(models.Model): 
     url = models.CharField(max_length=200)
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
@@ -105,6 +107,7 @@ class SitterProfile(models.Model):
     def __str__(self):
         return f"Photo for sitter_id: {self.sitter_id} @{self.url}"
 
+# owners profile picture
 class OwnerProfile(models.Model):
     url = models.CharField(max_length=200)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
