@@ -195,11 +195,17 @@ def add_posting(request, owner_id):
   
 # pots list
 def posts_index(request):
-  posts = Post.objects.all()
-  show_interest_form = ShowInterestForm()
+  posts = Post.objects.all() 
   return render(request, 'posts/index.html', { 
-    'posts': posts,
-    'show_interest_form': show_interest_form, 
+    'posts': posts,    
+  })
+
+def posts_detail(request, post_id):
+  post = Post.objects.get(id=post_id)
+  show_interest_form = ShowInterestForm()
+  return render(request, 'posts/detail.html', {
+    'post': post,
+    'show_interest_form': show_interest_form
   })
 
 def show_interest(request):
@@ -213,4 +219,4 @@ def show_interest(request):
     # show_interest.sitter_id = sitter_id
     # show_interest.save()
 
-  return render(request, 'posts/index.html', context)
+  return render(request, 'posts/detail.html', context)
