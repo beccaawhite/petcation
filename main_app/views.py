@@ -7,8 +7,10 @@ from django.contrib.auth.forms import UserCreationForm
 
 import uuid
 import boto3
-S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'beccaabucket'
+# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+# BUCKET = 'beccaabucket'
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'atusacatcollector'
 
 # Define the home view
 def home(request):
