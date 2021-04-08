@@ -11,12 +11,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
-S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'beccaabucket'
+# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+# BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
-# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-# BUCKET = 'ninascats'
+S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+BUCKET = 'ninascats'
 
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
@@ -250,7 +250,6 @@ def add_posting(request, owner_id):
     new_posting.owner_id = owner_id
     new_posting.save()
   # return redirect('detail', owner_id=owner_id)
-
   return redirect('index')
 
   
@@ -264,20 +263,23 @@ def posts_index(request):
 
 @login_required
 def posts_detail(request, post_id):
+  # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
+  # print(sitter.showinterest_set.all(), ' ahhhhh')
 
   show_interest_form = ShowInterestForm()
   print(post.showinterest_set.all(), ' asdfgsfg')
+  # print(post.showinterest.sitter_id, ' aasdggsdfsg')
   return render(request, 'posts/detail.html', {
     'post': post,
     'show_interest_form': show_interest_form,
-  }) 
+  })
 
 @login_required
 def show_interest(request, post_id):
-
   form = ShowInterestForm(request.POST)
   if form.is_valid():
+
     show_interest = form.save(commit=False)
     show_interest.sitter_id = request.user.id
     show_interest.post_id = post_id
