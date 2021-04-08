@@ -2,10 +2,10 @@
 {% block content %}
 
 <main class="container">
-  <h1>Pets Ready</h1>
+  <h2 class="center-align post-index-title">PETCATIONS</h2>
   <div class="flex-display">
   {% for post in posts %}
-    <a href="{% url 'posts_detail' post.id %}">
+    <a href="{% url 'posts_detail' post.id %}" class="petcation-card-links">
       <div class="card petcation-card">
         <div class="card-content">
           <i class="material-icons">pets</i>             
@@ -14,14 +14,12 @@
                 Pet Owner: {{ post.owner }}
               </h5>
           </span>
-          <p>Start Date: {{ post.start_date }}</p>
-          <p>End Date: {{ post.end_date }}</p>
+          <p>{{ post.start_date }} - {{ post.end_date }}</p>
         </div>
       </div>
     </a>
     {% endfor %}
   </div>
-
 </main>
 
 {% endblock %}

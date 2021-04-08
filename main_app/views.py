@@ -7,7 +7,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
 import uuid
 import boto3
 
@@ -21,7 +20,7 @@ BUCKET = 'ninascats'
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
 
-# Define the home view
+# Home and signup views
 def home(request):
     return render(request, 'home.html')
 
@@ -118,6 +117,7 @@ class PetDelete(LoginRequiredMixin, DeleteView):
   model = Pet
   success_url = '/owners/{owner_id}/'
 
+
 # Sitter Views
 class SitterCreate(LoginRequiredMixin, CreateView):
   model = Sitter
@@ -149,7 +149,9 @@ def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)
   return render(request, 'sitters/index.html', { 'sitters': sitters })
 
-#adds photos of pets to owners profile 
+
+# photo views
+# adds photos of pets to owners profile 
 @login_required
 def add_photo(request, owner_id):
     # photo-file will be the "name" attribute on the <input type="file">
@@ -173,7 +175,7 @@ def add_photo(request, owner_id):
             print('An error occurred uploading file to S3')
     return redirect('owners_detail', owner_id=owner_id)
 
-#adds owner profile picture
+# adds owner profile picture
 @login_required
 def add_owner_profile(request, owner_id):
     photo_file = request.FILES.get('photo-file', None)
@@ -192,7 +194,7 @@ def add_owner_profile(request, owner_id):
             print('An error occurred uploading file to S3')
     return redirect('owners_detail', owner_id=owner_id)
 
-#adds siter profile picture
+# adds siter profile picture
 @login_required
 def add_sitter_profile(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
@@ -229,7 +231,7 @@ def add_sitter_photo(request, sitter_id):
     return redirect('sitters_detail', sitter_id=sitter_id)
 
 
-#creating post by owner
+# post views
 @login_required
 def posts_create(request, owner_id):
       owner = Owner.objects.get(id=owner_id)
@@ -239,21 +241,15 @@ def posts_create(request, owner_id):
         'post_form': post_form
       })
 
-#adding post by owner
 @login_required
 def add_posting(request, owner_id):
-      	
   form = PostingForm(request.POST)
-  # validate the form
   if form.is_valid():
     new_posting = form.save(commit=False)
     new_posting.owner_id = owner_id
     new_posting.save()
-  # return redirect('detail', owner_id=owner_id)
   return redirect('index')
 
-  
-# pots list
 @login_required
 def posts_index(request):
   posts = Post.objects.all() 
@@ -263,23 +259,16 @@ def posts_index(request):
 
 @login_required
 def posts_detail(request, post_id):
-  # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
-  # print(sitter.showinterest_set.all(), ' ahhhhh')
-
   show_interest_form = ShowInterestForm()
   print(post.showinterest_set.all(), ' asdfgsfg')
-  # print(post.showinterest.sitter_id, ' aasdggsdfsg')
   return render(request, 'posts/detail.html', {
     'post': post,
     'show_interest_form': show_interest_form,
-    # 'sitter': sitter
   })
 
 @login_required
 def show_interest(request, post_id):
-  # print(sitter.showinterest_set.all(), ' ahhhhh')
-
   form = ShowInterestForm(request.POST)
   if form.is_valid():
     show_interest = form.save(commit=False)
@@ -287,7 +276,6 @@ def show_interest(request, post_id):
     show_interest.post_id = post_id
     show_interest.save()
   return redirect('posts_detail', post_id=post_id)
-
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
   model = Post
