@@ -10,12 +10,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
-# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-# BUCKET = 'beccaabucket'
+S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
-S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-BUCKET = 'ninascats'
+# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+# BUCKET = 'ninascats'
 
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
@@ -271,9 +271,9 @@ def posts_detail(request, post_id):
 def show_interest(request, post_id):
   form = ShowInterestForm(request.POST)
   if form.is_valid():
-
+    sitter = Sitter.objects.get(user=request.user)
     show_interest = form.save(commit=False)
-    show_interest.sitter_id = request.user.id
+    show_interest.sitter_id = sitter.id
     show_interest.post_id = post_id
     show_interest.save()
   return redirect('posts_detail', post_id=post_id)
