@@ -43,11 +43,13 @@
         <tr><th>Sitter Name</th><th>Available</th></tr>
       </thead>
       <tbody>
-        {% for interest in sitter.showinterest_set.all %}
-          <tr>
-            <td>{{interest.sitter.first_name}}</td>
-            <td>{{interest.get_is_interested_display}}</td>
-          </tr>
+        {% for interest in post.showinterest_set.all %}
+          {% if interest.is_interested == 'Y' %}
+            <tr>
+              <td>{{interest.sitter.first_name}}</td>
+              <td>{{interest.get_is_interested_display}}</td>
+            </tr>
+          {% endif %}
         {% endfor %}
       </tbody>
     </table> 
