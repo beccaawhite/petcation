@@ -250,16 +250,21 @@ def posts_index(request):
 def posts_detail(request, post_id):
   # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
-  
+  # print(sitter.showinterest_set.all(), ' ahhhhh')
+
   show_interest_form = ShowInterestForm()
+  print(post.showinterest_set.all(), ' asdfgsfg')
+  # print(post.showinterest.sitter_id, ' aasdggsdfsg')
   return render(request, 'posts/detail.html', {
     'post': post,
     'show_interest_form': show_interest_form,
+    # 'sitter': sitter
   })
 
 
 def show_interest(request, post_id):
-  print(request.user.id, ' THIS IS REQ.USER')
+  # print(sitter.showinterest_set.all(), ' ahhhhh')
+
   form = ShowInterestForm(request.POST)
   if form.is_valid():
     show_interest = form.save(commit=False)

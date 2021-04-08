@@ -2,7 +2,7 @@ from django.contrib import admin
 # from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
-from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto, OwnerProfile, SitterProfile, , ShowInterest
+from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto, OwnerProfile, SitterProfile, ShowInterest
 
 
 
