@@ -11,12 +11,14 @@
       <img class="circle responsive-img" style="max-width: 150px;" id="profilepicture" src="/static/css/profilePlaceholder.png">
       <p>{{ sitter.first_name }} {{ sitter.last_name }}</p>
       <div class="card-panel teal-text center-align">No profile picture</div>
+      {% if user.sitter.id %}
       <form action="{% url 'add_sitter_profile' sitter.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
         {% csrf_token %}
         <input type="file" name="photo-file">
         <br><br>
         <input type="submit" class="btn" value="Upload Profile Photo">
       </form>
+      {% endif %}
     {% endfor %}
   </div>
   
