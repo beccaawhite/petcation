@@ -6,6 +6,7 @@
     <span class="card-title">
       <a href="{% url 'owners_detail' post.owner.id %}">
         <h4>
+          <i class="material-icons post-detail-title">pets</i>
           Pet Owner - {{ post.owner }}
         </h4>
       </a>
@@ -27,7 +28,7 @@
   <div class="row">
     <div class="col s6">
       <div class="card-action">   
-        <h4>Available Sitters</h4>
+        <h4 class="center-align">Available Sitters</h4>
         {% if user.sitter.id %}
         <form action="{% url 'show_interest' post.id %}" method="post">
           {% csrf_token %}
@@ -44,7 +45,7 @@
             {% for interest in post.showinterest_set.all %}
               {% if interest.is_interested == 'Y' %}
                 <tr>
-                  <td><a href="{% url 'sitters_detail' interest.sitter.id %}">
+                  <td><a href="{% url 'sitters_detail' interest.sitter.id %}" class="avail-sitters">
                     {{interest.sitter.first_name}} {{interest.sitter.last_name}}
                   </td></a>
                   <td>{{interest.get_is_interested_display}}</td>
