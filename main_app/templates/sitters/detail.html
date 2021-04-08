@@ -5,10 +5,10 @@
   <br>
   <div class="col s12" style="text-align: center;">
     {% for profilepic in sitter.sitterprofile_set.all %}
-      <img class="circle responsive-img" style="max-width: 250px; max-height: 250px; min-width: 250px; min-height: 250px;" id="profilepicture" src="{{profilepic.url}}">
-      <p>{{ sitter.first_name }} {{ sitter.last_name }}</p>
+      <img class="circle responsive-img profile-image" style="max-width: 250px; max-height: 250px; min-width: 250px; min-height: 250px;" id="profilepicture" src="{{profilepic.url}}">
+      <p class="profile-name">{{ sitter.first_name }} {{ sitter.last_name }}</p>
     {% empty %}
-      <img class="circle responsive-img" style="max-width: 150px;" id="profilepicture" src="/static/css/profilePlaceholder.png">
+      <img class="circle responsive-img profile-image" style="max-width: 250px;" id="profilepicture" src="/static/css/profilePlaceholder.png">
       <p>{{ sitter.first_name }} {{ sitter.last_name }}</p>
       <div class="card-panel teal-text center-align">No profile picture</div>
       {% if user.sitter.id %}
@@ -25,15 +25,17 @@
   <div class="row">
     <div class="col s8" >
       <div class="card-content">
-        <p>About: {{ sitter.about }}</p>
-        <p>Location: {{ sitter.city }}</p>
-        <p>Sit Count: {{ sitter.sit_count }}</p>
         <p>Pet Experience: {{ sitter.pet_experience }}</p>
+        <p>Location: {{ sitter.city }}</p>
+        <p>Email: {{ sitter.email }}</p>
+        <p>About: {{ sitter.about }}</p>
       </div>
       {% if user.sitter.id %}
         <div class="card-action">
-          <a href="{% url 'sitters_update' sitter.id %}">Edit</a>
-          <a href="{% url 'sitters_delete' sitter.id %}">Delete</a>
+          <a href="{% url 'sitters_update' sitter.id %}" class="form-links">Edit</a>
+          &nbsp;
+          &nbsp;
+          <a href="{% url 'sitters_delete' sitter.id %}" class="form-links">Delete</a>
         </div>
       {% endif %}
     </div>
@@ -46,7 +48,8 @@
 </div>
 
   <div>
-    <h5>Sitter Petcation Photos:</h5>
+    <h5>Petcation Photos</h5>
+    <hr>
     {% for photo in sitter.sitterphoto_set.all %}
       <img class="responsive-img" style="max-width: 250px; max-height: 250px;" src="{{photo.url}}">
     {% empty %}

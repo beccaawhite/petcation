@@ -14,8 +14,8 @@
     </div>
     {% if user.owner.id %}
       <div class="card-action">
-        <a href="{% url 'pets_update' pet.id %}">Edit</a>
-        <a href="{% url 'pets_delete' pet.id %}">Delete</a>
+        <a href="{% url 'pets_update' pet.id %}" class="form-links">Edit</a>
+        <a href="{% url 'pets_delete' pet.id %}" class="form-links">Delete</a>
       </div>
     {% endif %}
   </div>

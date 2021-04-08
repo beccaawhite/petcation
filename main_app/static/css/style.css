@@ -1,8 +1,9 @@
 body {
+    color: rgb(79, 83, 91);
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     font-family: 'Lato', sans-serif;
+    min-height: 100vh;
   }
   
 main {
@@ -15,20 +16,31 @@ footer.page-footer {
 }
 
 nav {
-    background-color:rgb(136, 198, 196) ;
+    background-color:#9A8C98;
     font-family: 'Francois One', sans-serif;
     
 }
 
 .page-footer {
-    background-color:rgb(136, 198, 196);
+    background-color:rgb(126, 125, 140);
+}
+
+.btn {
+    background-color: rgb(188, 202, 116);
+    transition: background-color .2s ease-out;
+}
+
+.btn:hover {
+    background-color: rgb(202, 211, 139);
 }
 
 a {
-    color: rgb(95, 59, 45);  
+    color: rgb(125, 127, 130);
 }
 
-
+h4 {
+    font-family: 'Francois One', sans-serif;
+}
 
 /* Style Home Page */
 
@@ -65,6 +77,8 @@ a {
     font-size: medium;
 }
 
+
+
 /* Style Petcations */
 .flex-display {
     display: flex;
@@ -81,20 +95,62 @@ a {
 }
 
 .post-index-title {
+    color: rgb(79, 83, 91);
     font-family: 'Francois One', sans-serif;
 }
 
 .petcation-card-links {
-    color: rgb(95, 59, 45);
+    color: rgb(79, 83, 91);
 }
 
 .petcation-page > div > span > a > h4 {
+    color: rgb(79, 83, 91);
+    font-family: 'Francois One';
+    font-size: 40px;
     padding: 10px;
     text-align: center;
-    font-family: 'Francois One';
 }
+
+.petcation-page > div > span > a > h4:hover {
+    color: rgb(125, 127, 130);
+}
+
+.post-card-title {
+    color: rgb(79, 83, 91);
+    font-weight: 700;
+}
+
+.post-detail-title {
+    font-size: 40px;
+}
+
+.petcation-page > div > span > a > h4 {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* .avail-sitters {
+    color: rgb(79, 83, 91);
+} */
 
 /* Style Profile Pages */
 .profile-page {
     width: 80%;
+}
+
+.form-links {
+    color: rgb(148, 162, 77);
+}
+
+.profile-name {
+    font-size: 1.6rem;
+}
+
+.profile-image {
+    border: 1px rgb(79, 83, 91) solid;
+}
+
+.pet-cards {
+    margin: 10px;
 }
