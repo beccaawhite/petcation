@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<main class="container profile-page">
 
-  
+<main class="container petcation-page">
   <div class="card-content">
     <span class="card-title">
       <a href="{% url 'owners_detail' post.owner.id %}">
         <h4>
-          Pet Owner: {{ post.owner }}
+          Pet Owner - {{ post.owner }}
         </h4>
       </a>
     </span>
@@ -22,17 +21,19 @@
       <a href="{% url 'posts_delete' post.id %}">Delete</a>
     </div>
   {% endif %}
-
+  <br>
   <hr>
- 
-  <div class="card-action">   
-    <h4>Available Sitters</h4>
+  
+  <div class="row">
+    <div class="col s6">
+      <div class="card-action">   
+        <h4>Available Sitters</h4>
         {% if user.sitter.id %}
-          <form action="{% url 'show_interest' post.id %}" method="post">
-            {% csrf_token %}
-            {{ show_interest_form.as_p }}      
-            <input type="submit" value="Submit" class="btn">   
-          </form>
+        <form action="{% url 'show_interest' post.id %}" method="post">
+          {% csrf_token %}
+          {{ show_interest_form.as_p }}      
+          <input type="submit" value="Submit" class="btn">   
+        </form>
         {% endif %}
         <br> 
         <table class="striped">
@@ -52,10 +53,13 @@
             {% endfor %}
           </tbody>
         </table> 
+      </div>
+    </div>
   </div>
 </main>
 <script>
   var selectEl = document.getElementById('id_is_interested');
   M.FormSelect.init(selectEl);
 </script>
+
 {% endblock %}

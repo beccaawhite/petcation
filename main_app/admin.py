@@ -5,7 +5,6 @@ from django.contrib import admin
 from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto, OwnerProfile, SitterProfile, ShowInterest
 
 
-
 admin.site.register(Owner)
 admin.site.register(Sitter)
 admin.site.register(Pet)
