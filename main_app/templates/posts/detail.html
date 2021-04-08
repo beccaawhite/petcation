@@ -16,10 +16,10 @@
       <p>Email: <a href="mailto:{{ post.owner.user.email }}">{{ post.owner.user.email }}</a></p>
     </div>
   {% if user.owner.id %}
-  <div class="card-action">
-    <a href="{% url 'posts_update' post.id %}">Edit</a>
-    <a href="{% url 'posts_delete' post.id %}">Delete</a>
-  </div>
+    <div class="card-action">
+      <a href="{% url 'posts_update' post.id %}">Edit</a>
+      <a href="{% url 'posts_delete' post.id %}">Delete</a>
+    </div>
   {% endif %}
   <br>
   <hr>
@@ -58,7 +58,6 @@
   </div>
 </main>
 <script>
-  // initialize the interest select
   var selectEl = document.getElementById('id_is_interested');
   M.FormSelect.init(selectEl);
 </script>
