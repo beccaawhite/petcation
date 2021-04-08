@@ -11,12 +11,12 @@ import uuid
 import boto3
 import os
 
-S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'beccaabucket'
+# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+# BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
-# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-# BUCKET = 'ninascats'
+S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+BUCKET = 'ninascats'
 
 # S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
 # BUCKET = 'beccaabucket'
