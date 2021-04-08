@@ -15,16 +15,17 @@ footer.page-footer {
 }
 
 nav {
-    background-color:rgb(136, 198, 196) ;
+    background-color:rgb(223, 225, 230) ;
     font-family: 'Francois One', sans-serif;
+    color: rgb(44, 33, 52);
 }
 
 .page-footer {
-    background-color:rgb(136, 198, 196);
+    background-color:rgb(223, 225, 230);
 }
 
 a {
-    color: rgb(95, 59, 45);  
+    color: rgb(44, 33, 52);  
 }
 
 
