@@ -4,6 +4,8 @@ from .models import Owner, Sitter, Pet, Post, Photo, SitterPhoto, SitterProfile,
 from .forms import PetForm,PostingForm, ShowInterestForm, SignUpForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 import uuid
@@ -13,11 +15,11 @@ import boto3
 # BUCKET = 'beccaabucket'
 # S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 # BUCKET = 'atusacatcollector'
-# S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
-# BUCKET = 'ninascats'
+S3_BASE_URL = 'https://s3.us-west-2.amazonaws.com/'
+BUCKET = 'ninascats'
 
-S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'beccaabucket'
+# S3_BASE_URL ='https://s3.us-west-1.amazonaws.com/'
+# BUCKET = 'beccaabucket'
 
 # Define the home view
 def home(request):
@@ -50,7 +52,7 @@ def signup(request):
 
 
 # Owner Views
-class OwnerCreate(CreateView):
+class OwnerCreate(LoginRequiredMixin, CreateView):
   model = Owner
   fields = ['first_name', 'last_name', 'city', 'about']
 
@@ -59,20 +61,22 @@ class OwnerCreate(CreateView):
     return super().form_valid(form)
 
 
-class OwnerUpdate(UpdateView):
+class OwnerUpdate(LoginRequiredMixin, UpdateView):
   model = Owner
   fields = ['first_name', 'last_name', 'city', 'about']
 
-class OwnerDelete(DeleteView):
+class OwnerDelete(LoginRequiredMixin, DeleteView):
   model = Owner
   success_url = '/'
 
+@login_required
 def owners_detail(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
   return render(request, 'owners/detail.html', {
     'owner': owner,
   })
 
+@login_required
 def pets_create(request, owner_id):
   owner = Owner.objects.get(id=owner_id)
   pet_form = PetForm()
@@ -81,10 +85,12 @@ def pets_create(request, owner_id):
     'pet_form': pet_form
   })
 
+@login_required
 def owners_index(request):
   owners = Owner.objects.filter(user=request.user)
   return render(request, 'owners/index.html', { 'owners': owners })
 
+@login_required
 def add_pet(request, owner_id):
   # create the PetForm using data in request.POST
   form = PetForm(request.POST)
@@ -97,22 +103,23 @@ def add_pet(request, owner_id):
   return redirect('owners_detail', owner_id=owner_id)
 
 # Pet Views
+@login_required
 def pets_detail(request, pet_id):
   pet = Pet.objects.get(id=pet_id)
   return render(request, 'owners/pets/detail.html', {
     'pet': pet
   })
 
-class PetUpdate(UpdateView):
+class PetUpdate(LoginRequiredMixin, UpdateView):
   model = Pet
   fields = ['name', 'pet_type', 'breed', 'age', 'gender', 'characteristics', 'care_instructions']
 
-class PetDelete(DeleteView):
+class PetDelete(LoginRequiredMixin, DeleteView):
   model = Pet
   success_url = '/owners/{owner_id}/'
 
 # Sitter Views
-class SitterCreate(CreateView):
+class SitterCreate(LoginRequiredMixin, CreateView):
   model = Sitter
 
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
@@ -122,26 +129,28 @@ class SitterCreate(CreateView):
     return super().form_valid(form)
 
 
-class SitterUpdate(UpdateView):
+class SitterUpdate(LoginRequiredMixin, UpdateView):
   model = Sitter
   fields = ['first_name', 'last_name', 'city', 'pet_experience', 'about']
 
-class SitterDelete(DeleteView):
+class SitterDelete(LoginRequiredMixin, DeleteView):
   model = Sitter
   success_url = '/'
 
-
+@login_required
 def sitters_detail(request, sitter_id):
   sitter = Sitter.objects.get(id=sitter_id)
   return render(request, 'sitters/detail.html', {
     'sitter': sitter
   })
 
+@login_required
 def sitters_index(request):
   sitters = Sitter.objects.filter(user=request.user)
   return render(request, 'sitters/index.html', { 'sitters': sitters })
 
 #adds photos of pets to owners profile 
+@login_required
 def add_photo(request, owner_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -165,6 +174,7 @@ def add_photo(request, owner_id):
     return redirect('owners_detail', owner_id=owner_id)
 
 #adds owner profile picture
+@login_required
 def add_owner_profile(request, owner_id):
     photo_file = request.FILES.get('photo-file', None)
     # print(photo_file, "pphoto file")
@@ -183,6 +193,7 @@ def add_owner_profile(request, owner_id):
     return redirect('owners_detail', owner_id=owner_id)
 
 #adds siter profile picture
+@login_required
 def add_sitter_profile(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -200,6 +211,7 @@ def add_sitter_profile(request, sitter_id):
     return redirect('sitters_detail', sitter_id=sitter_id)
 
 # sitter adds pictures to bottom
+@login_required
 def add_sitter_photo(request, sitter_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -217,8 +229,8 @@ def add_sitter_photo(request, sitter_id):
     return redirect('sitters_detail', sitter_id=sitter_id)
 
 
-
 #creating post by owner
+@login_required
 def posts_create(request, owner_id):
       owner = Owner.objects.get(id=owner_id)
       post_form = PostingForm()
@@ -228,6 +240,7 @@ def posts_create(request, owner_id):
       })
 
 #adding post by owner
+@login_required
 def add_posting(request, owner_id):
       	
   form = PostingForm(request.POST)
@@ -241,12 +254,14 @@ def add_posting(request, owner_id):
 
   
 # pots list
+@login_required
 def posts_index(request):
   posts = Post.objects.all() 
   return render(request, 'posts/index.html', { 
     'posts': posts,    
   })
 
+@login_required
 def posts_detail(request, post_id):
   # sitter = Sitter.objects.get(id=sitter_id)
   post = Post.objects.get(id=post_id)
@@ -261,7 +276,7 @@ def posts_detail(request, post_id):
     # 'sitter': sitter
   })
 
-
+@login_required
 def show_interest(request, post_id):
   # print(sitter.showinterest_set.all(), ' ahhhhh')
 
@@ -274,10 +289,10 @@ def show_interest(request, post_id):
   return redirect('posts_detail', post_id=post_id)
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
   model = Post
   fields = ['start_date', 'end_date', 'details']
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
   model = Post
   success_url = '/posts/'
