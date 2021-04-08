@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<main class="container">
+<main class="container profile-page">
   <br>
   <div class="col s12" style="text-align: center;">
     {% for profilepic in sitter.sitterprofile_set.all %}
@@ -61,8 +61,5 @@
       </form>
     {% endif %}
   </div>
-
-  
-
 </main>
 {% endblock %}

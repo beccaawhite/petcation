@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: rgb(248, 247, 242);
   }
   
 main {
@@ -15,11 +16,18 @@ footer.page-footer {
 
 nav {
     background-color:rgb(136, 198, 196) ;
+    font-family: 'Francois One', sans-serif;
 }
 
 .page-footer {
-    background-color:rgb(136, 198, 196) ;
+    background-color:rgb(136, 198, 196);
 }
+
+a {
+    color: rgb(238, 115, 42);  
+}
+
+
 
 /* Style Home Page */
 
@@ -47,8 +55,14 @@ nav {
     width: 500px;
 }
 
-/* Style Owner Profile Page */
+/* Style About Page */
+.about-page {
+    width: 50%;
+}
 
+.about-page > p {
+    font-size: medium;
+}
 
 /* Style Petcations */
 .flex-display {
@@ -63,4 +77,23 @@ nav {
 #profilepicture {
     max-height: 80px;
     width: 80px;
+}
+
+.post-index-title {
+    font-family: 'Francois One', sans-serif;
+}
+
+.petcation-card-links {
+    color: rgb(95, 59, 45);
+}
+
+.petcation-page > div > span > a > h4 {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Francois One';
+}
+
+/* Style Profile Pages */
+.profile-page {
+    width: 80%;
 }

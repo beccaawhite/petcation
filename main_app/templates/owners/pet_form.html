@@ -3,7 +3,6 @@
 
 <main class="container">
 <h3>Add Pet</h3>
-<!-- Leaving the action empty makes the form post to the same url used to display it -->
 <div class="col s6">
   <form action="{% url 'add_pet' owner.id %}" method="post">
     {% csrf_token %}
