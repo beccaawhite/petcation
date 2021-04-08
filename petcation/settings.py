@@ -20,9 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'at8df%n=msmpn-$09zi5_%0a@$mcz*sos$0$00_zc8@vfn85-_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -125,9 +126,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-# import django_heroku
-# django_heroku.settings(locals())
 
-# import environ
-# environ.Env()
-# environ.Env.read_env()
+# AUTH_USER_MODEL = 'petcation.MyUser'
+
