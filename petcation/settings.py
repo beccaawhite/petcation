@@ -25,9 +25,7 @@ SECRET_KEY = 'at8df%n=msmpn-$09zi5_%0a@$mcz*sos$0$00_zc8@vfn85-_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'petcation.herokuapp.com'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -131,3 +129,5 @@ LOGOUT_REDIRECT_URL = '/'
 
 # AUTH_USER_MODEL = 'petcation.MyUser'
 
+import django_heroku
+django_heroku.settings(locals())
