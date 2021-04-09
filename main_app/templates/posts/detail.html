@@ -14,12 +14,14 @@
       <p>Start Date: {{ post.start_date }}</p>
       <p>End Date: {{ post.end_date }}</p>
       <p>Details: {{ post.details }}</p>
-      <p>Email: <a href="mailto:{{ post.owner.user.email }}">{{ post.owner.user.email }}</a></p>
+      <p>Contact Info: <a href="mailto:{{ post.owner.user.email }}">{{ post.owner.user.email }}</a></p>
     </div>
   {% if user.owner.id %}
     <div class="card-action">
-      <a href="{% url 'posts_update' post.id %}">Edit</a>
-      <a href="{% url 'posts_delete' post.id %}">Delete</a>
+      <a href="{% url 'posts_update' post.id %}" class="form-links">Edit</a>
+      &nbsp;
+      &nbsp;
+      <a href="{% url 'posts_delete' post.id %}" class="form-links">Delete</a>
     </div>
   {% endif %}
   <br>
