@@ -129,3 +129,5 @@ LOGOUT_REDIRECT_URL = '/'
 
 # AUTH_USER_MODEL = 'petcation.MyUser'
 
+import django_heroku
+django_heroku.settings(locals())

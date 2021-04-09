@@ -71,7 +71,6 @@ class OwnerDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def owners_detail(request, owner_id):
-#   my_key = os.environ['SECRET_KEY']
   owner = Owner.objects.get(id=owner_id)
   return render(request, 'owners/detail.html', {
     'owner': owner,
@@ -141,7 +140,6 @@ class SitterDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def sitters_detail(request, sitter_id):
-#   my_key = os.environ['SECRET_KEY']
   sitter = Sitter.objects.get(id=sitter_id)
   return render(request, 'sitters/detail.html', {
     'sitter': sitter
