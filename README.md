@@ -1,13 +1,23 @@
 # Petcation
 
-Petcation is a space for all pet lovers, owners and sitters alike. As pet owners, we often reach out to our closest, most trusted friends to care for our loving pets. Our friends are also happy to care for your pets when time permits for them. Without the pressure and obligation to ask (and respond), Petcation allows pet owners to post petcations. Our friends are then able to see available dates and respond to pet sit voluntarily. Most importantly, our loving pets get a chance to take a "petcation" with our friends!!
+Petcation provides a community for pet owners and pet sitters to connect. Users can sign up and create either an owners profile or sitters profile. They can also customize their page by adding photos and writing descriptions of their pets. As pet owners, we often reach out to our closest, most trusted friends to care for our loving animals. Our friends are also happy to care for your pets when time permits for them. Without the pressure and obligation to ask (and respond), Petcation allows pet owners to post petcations aka posts for pet sitters. Our friends are then able to see available dates and respond to pet sit voluntarily. Best of all, our animals get a chance to take a petcation with our friends! 
 
 
-<img src="front_page.png">
+### Home page 
+<img src="homepage.png">
+
+### Petcations page - to see pet sitting posts
 <img src="petcations_post.png">
 
-## Technologies Used 
+### Pet sitter sign up
+<img src="create_petsitter.png">
 
+### Example owner profile
+<img src="owner_profile.png">
+<img src="owner_profile2.png">
+
+
+## Technologies Used 
 - HTML
 - CSS
 - Javascript
@@ -19,11 +29,12 @@ Petcation is a space for all pet lovers, owners and sitters alike. As pet owners
 
 ## Getting Started
 
-[Click here to launch our app](https://petcation.herokuapp.com/)
+[Click here to start your Petcation!](https://petcation.herokuapp.com/)
 
-[Click here to launch our Trello board](https://trello.com/b/6jDEKGDa/project-3)
+[View our Trello board here](https://trello.com/b/6jDEKGDa/project-3)
 
 ## Next Steps
-- Allow the pet sitter to send and post updates to the owner with specific details during sit, including: pictures, map pins and feeding schedules.
+- Fix user functionality by only being able to edit your own profile
+- Allow the pet sitter to send and post updates to the owner with specific details during pet sit, including: pictures, map pins and feeding schedules
 - Allow owners to leave personalized thank you messages on the pet sitters page
-- 
+
