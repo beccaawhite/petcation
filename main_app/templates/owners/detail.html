@@ -8,7 +8,7 @@
     <img class="circle responsive-img profile-image" style="max-width: 250px; max-height: 250px; min-width: 250px; min-height: 250px;" src="{{profilepic.url}}">
     <p class="profile-name">{{ owner.first_name }} {{ owner.last_name }}</p>
     {% empty %}
-    <img class="circle responsive-img profile-image" style="max-width: 150px;" id="profilepicture"
+    <img class="circle responsive-img profile-image" style="max-width: 250px;" id="profilepicture"
       src="/static/css/profilePlaceholder.png">
     <p>{{ owner.first_name }} {{ owner.last_name }}</p>
     <div class="card-panel teal-text center-align">No Profile Pic</div>
@@ -35,6 +35,8 @@
       {% if user.owner.id %}
       <div class="card-action">
         <a href="{% url 'owners_update' owner.id %}" class="form-links">Edit</a>
+        &nbsp;
+        &nbsp;
         <a href="{% url 'owners_delete' owner.id %}" class="form-links">Delete</a>
       </div>
       {% endif %}
@@ -45,14 +47,13 @@
       </iframe>
     </div>
   </div>
-
-  <h3>Pet List</h3>
-  <div class="flex-display">
+  <h5>Pet List</h5>
+  <div class="grid-display">
     {% for pet in owner.pet_set.all %}
     <a href="{% url 'pets_detail' pet.id %}">
       <div class="card pet-cards">
         <div class="card-content">
-          <span class="card-title">{{ pet.name }}</span>
+          <span class="card-title center-align">{{ pet.name }}</span>
           <p>Type: {{ pet.pet_type }}</p>
           <p>Breed: {{ pet.breed }}</p>
           <p>Age: {{ pet.age }}</p>
@@ -67,7 +68,7 @@
   {% endif %}
   <br>
 
-  <h4>Pet Photos:</h4>
+  <h5>Pet Photos</h5>
   {% for photo in owner.photo_set.all %}
   <img class="responsive-img" style="max-width: 250px; max-height: 250px;" src="{{photo.url}}">
   {% empty %}
