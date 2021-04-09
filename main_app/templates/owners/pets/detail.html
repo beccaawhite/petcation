@@ -2,9 +2,9 @@
 {% block content %}
 
 <main class="container">
-  <div class="card">
+  <div class="pets-detail-page">
     <div class="card-content">
-        <span class="card-title">{{ pet.name }}</span>
+        <span class="pet-name-title center-align"><h4>{{ pet.name }}</h4></span>
         <p>Type: {{ pet.pet_type }}</p>
         <p>Breed: {{ pet.breed }}</p>
         <p>Age: {{ pet.age }}</p>
@@ -15,6 +15,8 @@
     {% if user.owner.id %}
       <div class="card-action">
         <a href="{% url 'pets_update' pet.id %}" class="form-links">Edit</a>
+        &nbsp;
+        &nbsp;
         <a href="{% url 'pets_delete' pet.id %}" class="form-links">Delete</a>
       </div>
     {% endif %}
